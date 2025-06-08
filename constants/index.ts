@@ -23,7 +23,7 @@ export const voices = {
     female: {
         casual: {
             en: 'ZIlrSGI4jZqobxRKprJz',
-            es: '50YSQEDPA2vlOxhCseP4'
+            es: 'UOIqAnmS11Reiei1Ytkc'
         },
         formal: {
             en: 'sarah',

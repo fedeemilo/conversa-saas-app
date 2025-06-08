@@ -21,7 +21,11 @@
     },
     "companion-new": {
         "title": "Companion Builder",
-        "description": "Customize your companion with a unique name, subject, voice, and style."
+        "description": "Customize your companion with a unique name, subject, voice, and style.",
+        "limit_title": "You’ve reached your limit",
+        "limit_description": "You’ve reached your companion limit. Upgrade to create more companions and premium features.",
+        "limit_badge": "Upgrade your plan",
+        "limit_button": "Upgrade My Plan"
     },
     "companion-session": {
         "minutes": "minutes"
@@ -51,6 +55,12 @@
     "home": {
         "popular": "Popular Companions",
         "recent": "Recently completed sessions"
+    },
+    "my-journey": {
+        "lessons_completed": "Lessons completed",
+        "companions_created": "Companions created",
+        "recent_sessions": "Recent Sessions",
+        "my_companions": "My Companions"
     },
     "navbar": {
         "home": "Home",

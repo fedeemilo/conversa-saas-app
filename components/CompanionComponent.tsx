@@ -8,6 +8,8 @@ import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import soundwaves from '@/constants/soundwaves.json'
 import { configureAssistant } from '@/lib/assistant.server'
 import { useLocale } from 'next-intl'
+import { addToSessionHistory } from '@/lib/actions/companion.actions'
+import * as Sentry from '@sentry/nextjs'
 
 enum CallStatus {
     INACTIVE = 'INACTIVE',
@@ -49,10 +51,10 @@ const CompanionComponent = ({
     useEffect(() => {
         const onCallStart = () => setCallStatus(CallStatus.ACTIVE)
 
-        const onCallEnd = () => {
+        const onCallEnd = async () => {
             setCallStatus(CallStatus.FINISHED)
 
-            // addToSessionHistory(companionId)
+            await addToSessionHistory(companionId)
         }
 
         const onMessage = (message: Message) => {
@@ -63,7 +65,10 @@ const CompanionComponent = ({
         }
         const onSpeechStart = () => setIsSpeaking(true)
         const onSpeechEnd = () => setIsSpeaking(false)
-        const onError = (error: Error) => console.error('Call error:', error)
+        const onError = (error: Error) => {
+            console.error('Call error:', error)
+            Sentry.captureException(error)
+        }
 
         vapi.on('call-start', onCallStart)
         vapi.on('call-end', onCallEnd)

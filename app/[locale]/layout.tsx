@@ -24,14 +24,14 @@ export const metadata: Metadata = {
     description: 'Real-time AI Teaching Platform'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
     params
 }: {
     children: ReactNode
-    params: { locale: string }
+    params: Promise<{ locale: string }>
 }) {
-    const { locale } = params
+    const { locale } = await params
 
     if (!hasLocale(routing.locales, locale)) {
         notFound()

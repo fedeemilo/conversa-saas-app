@@ -19,7 +19,10 @@ const CompanionCard = ({ id, name, topic, subject, duration, color }: CompanionC
     const translateSubject = useTranslatedSubject()
 
     return (
-        <article className="companion-card" style={{ backgroundColor: color }}>
+        <article
+            className="companion-card flex flex-col justify-between rounded-xl p-4 md:h-79"
+            style={{ backgroundColor: color }}
+        >
             <div className="flex items-center justify-between">
                 <div className="subject-badge">{translateSubject(subject)}</div>
                 <button className="companion-bookmark">
@@ -36,11 +39,13 @@ const CompanionCard = ({ id, name, topic, subject, duration, color }: CompanionC
                 </p>
             </div>
 
-            <Link href={`/companions/${id}`} className="w-full">
-                <button className="btn-primary w-full justify-center">
-                    {t('companion-card.launch')}
-                </button>
-            </Link>
+            <div className="mt-auto pt-4">
+                <Link href={`/companions/${id}`} className="w-full">
+                    <button className="btn-primary w-full justify-center">
+                        {t('companion-card.launch')}
+                    </button>
+                </Link>
+            </div>
         </article>
     )
 }

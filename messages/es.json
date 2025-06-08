@@ -20,8 +20,12 @@
         "mins": "minutos"
     },
     "companion-new": {
-        "title": "Crear un nuevo tutor",
-        "description": "Personaliza tu tutor con un nombre, asignatura, voz y estilo únicos."
+        "title": "Creador de Tutores",
+        "description": "Personaliza tu tutor con un nombre, asignatura, voz y estilo únicos.",
+        "limit_title": "Has alcanzado tu límite",
+        "limit_description": "Has alcanzado el límite de tutores. Mejora tu plan para crear más tutores y acceder a funciones premium.",
+        "limit_badge": "Mejorá tu plan",
+        "limit_button": "Mejorar mi Plan"
     },
     "companion-session": {
         "minutes": "minutos"
@@ -51,6 +55,12 @@
     "home": {
         "popular": "Tutores Populares",
         "recent": "Sesiones completadas recientemente"
+    },
+    "my-journey": {
+        "lessons_completed": "Lecciones completadas",
+        "companions_created": "Tutores creados",
+        "recent_sessions": "Sesiones recientes",
+        "my_companions": "Mis Tutores"
     },
     "navbar": {
         "home": "Inicio",
