@@ -27,7 +27,11 @@ const NewCompanionClient = ({ canCreate }: { canCreate: boolean }) => {
                     <div className="cta-badge">{t('limit_badge')}</div>
                     <h1>{t('limit_title')}</h1>
                     <p>{t('limit_description')}</p>
-                    <Link href="/subscription" className="btn-primary w-full justify-center">
+                    <Link
+                        href="/subscription"
+                        className="btn-primary w-full justify-center"
+                        prefetch={true}
+                    >
                         {t('limit_button')}
                     </Link>
                 </article>

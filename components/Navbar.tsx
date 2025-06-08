@@ -10,7 +10,7 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-            <Link href={'/'}>
+            <Link href={'/'} prefetch={true}>
                 <div className="flex cursor-pointer items-center gap-2.5">
                     <Image src={'/images/logo.svg'} alt={'logo'} width={46} height={44} />
                 </div>

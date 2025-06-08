@@ -3,8 +3,11 @@ import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { getSubjectColor } from '@/lib/utils'
 import Image from 'next/image'
-import CompanionComponent from '@/components/CompanionComponent'
+import dynamic from 'next/dynamic'
 import { getTranslations } from 'next-intl/server'
+import { Suspense } from 'react'
+import CompanionSessionSkeleton from '@/components/CompanionSessionSkeleton'
+import CompanionClientWrapper from '@/components/CompanionClientWrapper'
 
 interface CompanionSessionPageProps {
     params: Promise<{ id: string; locale: string }>
@@ -47,19 +50,21 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
                     {duration} {t('minutes')}
                 </div>
             </article>
-            <CompanionComponent
-                {...companion}
-                companionId={id}
-                userName={user.firstName}
-                userImage={user.imageUrl}
-                translations={{
-                    connecting: tCompanion('connecting'),
-                    turnOnMic: tCompanion('turn_on_microphone'),
-                    turnOffMic: tCompanion('turn_off_microphone'),
-                    startSession: tCompanion('start_session'),
-                    endSession: tCompanion('end_session')
-                }}
-            />
+            <Suspense fallback={<CompanionSessionSkeleton />}>
+                <CompanionClientWrapper
+                    {...companion}
+                    companionId={id}
+                    userName={user.firstName}
+                    userImage={user.imageUrl}
+                    translations={{
+                        connecting: tCompanion('connecting'),
+                        turnOnMic: tCompanion('turn_on_microphone'),
+                        turnOffMic: tCompanion('turn_off_microphone'),
+                        startSession: tCompanion('start_session'),
+                        endSession: tCompanion('end_session')
+                    }}
+                />
+            </Suspense>
         </main>
     )
 }

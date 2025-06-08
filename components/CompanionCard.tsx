@@ -1,12 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useTranslatedSubject } from '@/lib/subject'
-import { removeBookmark } from '@/lib/actions/companion.actions'
-import { addBookmark } from '@/lib/actions/companion.actions'
+import { removeBookmark, addBookmark } from '@/lib/actions/companion.actions'
 import { usePathname } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Loader2Icon } from 'lucide-react'
+import { useRedirectWithLoader } from '@/hooks/useRedirectWithLoader'
 
 interface CompanionCardProps {
     id: string
@@ -29,8 +30,9 @@ const CompanionCard = ({
 }: CompanionCardProps) => {
     const t = useTranslations()
     const translateSubject = useTranslatedSubject()
-
     const pathname = usePathname()
+    const { loading, handleRedirect } = useRedirectWithLoader()
+
     const handleBookmark = async () => {
         if (bookmarked) {
             await removeBookmark(id, pathname)
@@ -41,7 +43,7 @@ const CompanionCard = ({
 
     return (
         <article
-            className="companion-card flex flex-col justify-between rounded-xl p-4 md:h-79"
+            className="companion-card flex flex-col justify-between rounded-xl p-4 transition-shadow duration-200 hover:shadow-md md:h-79"
             style={{ backgroundColor: color }}
         >
             <div className="flex items-center justify-between">
@@ -55,24 +57,34 @@ const CompanionCard = ({
                     />
                 </button>
             </div>
+
             <h2 className="text-2xl font-bold">{name}</h2>
             <p className="text-sm">{topic}</p>
 
             <div className="flex items-center gap-2">
-                <Image src={'/icons/clock.svg'} alt={'duration'} width={13.5} height={13.5} />
-                <p className="textsm">
+                <Image src="/icons/clock.svg" alt="duration" width={13.5} height={13.5} />
+                <p className="text-sm">
                     {duration} {t('companion-session.minutes')}
                 </p>
             </div>
 
             <div className="mt-auto pt-4">
-                <Link href={`/companions/${id}`} className="w-full">
-                    <button className="btn-primary w-full justify-center">
-                        {t('companion-card.launch')}
-                    </button>
-                </Link>
+                <Button
+                    onClick={() => handleRedirect(`/companions/${id}`)}
+                    className="w-full cursor-pointer justify-center"
+                >
+                    {loading ? (
+                        <>
+                            <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                            {t('companion-card.launch')}
+                        </>
+                    ) : (
+                        t('companion-card.launch')
+                    )}
+                </Button>
             </div>
         </article>
     )
 }
+
 export default CompanionCard
