@@ -60,7 +60,8 @@
         "lessons_completed": "Lessons completed",
         "companions_created": "Companions created",
         "recent_sessions": "Recent Sessions",
-        "my_companions": "My Companions"
+        "my_companions": "My Companions",
+        "bookmarked_companions": "Bookmarked Companions"
     },
     "navbar": {
         "home": "Home",

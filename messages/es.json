@@ -60,7 +60,8 @@
         "lessons_completed": "Lecciones completadas",
         "companions_created": "Tutores creados",
         "recent_sessions": "Sesiones recientes",
-        "my_companions": "Mis Tutores"
+        "my_companions": "Mis Tutores",
+        "bookmarked_companions": "Tutores Favoritos"
     },
     "navbar": {
         "home": "Inicio",

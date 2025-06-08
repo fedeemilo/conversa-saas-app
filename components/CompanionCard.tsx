@@ -4,6 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useTranslatedSubject } from '@/lib/subject'
+import { removeBookmark } from '@/lib/actions/companion.actions'
+import { addBookmark } from '@/lib/actions/companion.actions'
+import { usePathname } from 'next/navigation'
 
 interface CompanionCardProps {
     id: string
@@ -12,11 +15,29 @@ interface CompanionCardProps {
     subject: string
     duration: number
     color: string
+    bookmarked: boolean
 }
 
-const CompanionCard = ({ id, name, topic, subject, duration, color }: CompanionCardProps) => {
+const CompanionCard = ({
+    id,
+    name,
+    topic,
+    subject,
+    duration,
+    color,
+    bookmarked
+}: CompanionCardProps) => {
     const t = useTranslations()
     const translateSubject = useTranslatedSubject()
+
+    const pathname = usePathname()
+    const handleBookmark = async () => {
+        if (bookmarked) {
+            await removeBookmark(id, pathname)
+        } else {
+            await addBookmark(id, pathname)
+        }
+    }
 
     return (
         <article
@@ -25,8 +46,13 @@ const CompanionCard = ({ id, name, topic, subject, duration, color }: CompanionC
         >
             <div className="flex items-center justify-between">
                 <div className="subject-badge">{translateSubject(subject)}</div>
-                <button className="companion-bookmark">
-                    <Image src={'/icons/bookmark.svg'} alt={'bookmark'} width={12.5} height={15} />
+                <button className="companion-bookmark" onClick={handleBookmark}>
+                    <Image
+                        src={bookmarked ? '/icons/bookmark-filled.svg' : '/icons/bookmark.svg'}
+                        alt="bookmark"
+                        width={12.5}
+                        height={15}
+                    />
                 </button>
             </div>
             <h2 className="text-2xl font-bold">{name}</h2>
