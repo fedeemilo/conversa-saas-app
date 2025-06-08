@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Conversa
 
-## Getting Started
+**Conversa** es una plataforma educativa impulsada por IA que permite a los usuarios crear y conversar con tutores personalizados en tiempo real usando voz. La app está construida con Next.js 15, Vapi AI, Clerk, Supabase y Sentry, y soporta internacionalización dinámica.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Tecnologías principales
+
+* **Next.js 15.3.3** con App Router
+* **Vapi AI**: conversaciones por voz con LLMs (OpenAI + TTS + STT)
+* **11labs** para síntesis de voz natural
+* **Clerk**: autenticación y gestión de usuarios
+* **Supabase**: base de datos y backend-as-a-service
+* **next-intl**: internacionalización i18n (en / es)
+* **Sentry**: monitoreo de errores y replays
+* **TailwindCSS + Radix UI**: estilado moderno y accesible
+* **Zod + React Hook Form** para validación de formularios
+
+---
+
+## 🚀 Características principales
+
+- 📚 Creación de tutores con nombre, voz, estilo y asignatura personalizada
+- 🗣️ Interacción por voz en tiempo real
+- 🎧 Transcripción en vivo de la conversación
+- 🌐 Soporte multilenguaje (inglés y español) con detección automática
+- 🧠 IA ajustada al contexto (tema + estilo conversacional)
+- 🔒 Integración con Clerk para autenticación de usuarios
+- 🐞 Monitoreo de errores y trazas con Sentry
+- 📦 Arquitectura moderna: Next.js + Tailwind + Supabase + Vapi
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+/app
+  [locale]            ⬅️ Soporte multi-idioma con routing dinámico
+    layout.tsx        ✅ Layout multilenguaje con NextIntlProvider y ClerkProvider
+    api/              ✅ Endpoints API (incluye integraciones Sentry)
+    companions/       ✅ Lógica de tutores y sesiones
+    sign-in/          ✅ Autenticación con Clerk
+/components
+  ui/                 ✅ Componentes reutilizables (Select, Input, etc.)
+  CompanionComponent.tsx
+  CompanionForm.tsx   ✅ Crear un nuevo tutor con nombre, estilo, voz, tema
+/constants            ✅ Paletas, sonidos, IDs de voces, textos
+/i18n                 ✅ Traducciones y routing local
+/hooks                ✅ Custom hooks
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌐 Internacionalización
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Idiomas soportados: `en`, `es`
+* Se usa `next-intl` con estructura `/[locale]/` en rutas.
+* Los textos del tutor se localizan en `es.json` y `en.json`.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🎧 Sistema de voz con Vapi AI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Text-to-Speech (11labs)**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    * Voz y estilo configurables: casual/formal y masculino/femenino
+    * Soporte para voces custom en español (ej: Mauricio, Jhenny)
 
-## Deploy on Vercel
+* **Speech-to-Text (Deepgram)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    * Modelos `nova-2` para `es` y `nova-3` para `en`
+    * Trigger de pausa mediante palabras clave: "Para" / "Stop"
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* **IA Conversacional (OpenAI)**
+
+    * Instrucciones dinámicas con `systemPrompt`
+    * Modo conversación en tiempo real con respuestas breves
+
+---
+
+## 🔒 Autenticación con Clerk
+
+* Clerk integrado en layout global con `<ClerkProvider>`
+* `currentUser` disponible en server components
+* Soporte para avatares, nombres y rutas protegidas
+
+---
+
+## 📉 Monitoreo con Sentry
+
+* Integración completa usando `@sentry/nextjs`
+* Soporte para `replay`, `captureException`, trazas y errores
+* Configurado en `sentry.server.config.ts`, `sentry.edge.config.ts` y `instrumentation.ts`
+* Replays activados con grabación de sesión
+
+---
+
+## 📅 Roadmap sugerido
+
+* [ ] Agregar panel de admin para gestionar companions
+* [ ] Sistema de puntuación de sesiones
+* [ ] Exportar conversaciones o resúmen por texto
+* [ ] Subida del proyecto a Vercel + dominio custom
+
+---
+
+
+
+## 📂 Scripts disponibles
+
+```bash
+npm run dev        # Inicia Next.js con turbopack
+npm run build      # Build de producción
+npm run start      # Server de producción
+npm run lint       # Linter
+```
+
+---
+
+## 🌟 Crédito y contacto
+
+Desarrollado por **Federico Milone**. Contactame a través de mi portfolio: https://fedmilo.com

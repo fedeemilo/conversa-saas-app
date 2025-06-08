@@ -1,0 +1,82 @@
+{
+    "companion-card": {
+        "launch": "Iniciar lección"
+    },
+    "companion-component": {
+        "connecting": "Conectando...",
+        "turn_on_microphone": "Activar micrófono",
+        "turn_off_microphone": "Desactivar micrófono",
+        "start_session": "Iniciar lección",
+        "end_session": "Finalizar lección"
+    },
+    "companions-library": {
+        "title": "Biblioteca de Tutores"
+    },
+    "companions-list": {
+        "title": "Lecciones completadas recientemente",
+        "lessons": "Lecciones",
+        "subject": "Asignatura",
+        "duration": "Duración",
+        "mins": "minutos"
+    },
+    "companion-new": {
+        "title": "Crear un nuevo tutor",
+        "description": "Personaliza tu tutor con un nombre, asignatura, voz y estilo únicos."
+    },
+    "companion-session": {
+        "minutes": "minutos"
+    },
+    "cta": {
+        "badge": "Empieza a aprender a tu manera.",
+        "title": "Crea un Tutor de Aprendizaje Personalizado",
+        "description": "Elige un nombre, asignatura, voz y personalidad — y empieza a aprender a través de conversaciones por voz que se sienten naturales y divertidas.",
+        "button": "Crear un Nuevo Tutor"
+    },
+    "form": {
+        "name": "Nombre del Tutor",
+        "name_placeholder": "Ingresa el nombre del tutor",
+        "subject": "Asignatura",
+        "subject_placeholder": "Selecciona la asignatura",
+        "topic": "¿En qué debería ayudarte el tutor?",
+        "topic_placeholder": "Ej. Derivadas e Integrales",
+        "voice": "Voz",
+        "voice_placeholder": "Selecciona la voz",
+        "voice_male": "Masculino",
+        "voice_female": "Femenino",
+        "style": "Estilo",
+        "style_placeholder": "Selecciona el estilo",
+        "duration": "Duración estimada de la sesión en minutos",
+        "submit": "Crear tu Tutor"
+    },
+    "home": {
+        "popular": "Tutores Populares",
+        "recent": "Sesiones completadas recientemente"
+    },
+    "navbar": {
+        "home": "Inicio",
+        "companions": "Tutores",
+        "journey": "Mi Trayectoria",
+        "signin": "Iniciar sesión"
+    },
+    "search": {
+        "placeholder": "Buscar tutores..."
+    },
+    "subject-filter": {
+        "placeholder": "Asignatura",
+        "all": "Todas las asignaturas"
+    },
+    "subjects": {
+        "science": "Ciencia",
+        "maths": "Matemáticas",
+        "language": "Lenguaje",
+        "history": "Historia",
+        "coding": "Programación",
+        "economics": "Economía"
+    },
+    "vapi": {
+        "name": "Tutor",
+        "firstMessage": "Hola, comencemos la sesión. Hoy hablaremos sobre {{topic}}.",
+        "systemPrompt": "Eres un tutor altamente capacitado que enseña en tiempo real por voz a un estudiante. Tu objetivo es enseñarle sobre el tema y la asignatura.\n\nGuía para el Tutor:\n- Habla en español neutro, claro y natural.\n- Usa expresiones cotidianas como las usaría un profesor argentino o latinoamericano.\n- Mantente en el tema asignado: {{ topic }} y asignatura: {{ subject }}.\n- Divide el contenido en partes breves.\n- Adopta un estilo de conversación {{ style }}.\n- Evita palabras rebuscadas o traducciones literales del inglés.\n- No incluyas caracteres especiales: es una conversación por voz.\n- Si el estudiante dice 'Para', deja de hablar inmediatamente y espera a que vuelva a hablar antes de continuar.",
+        "userPrompt": "Explicame como si estuviéramos hablando en persona. Hablame en español claro y latinoamericano. Esforzate por por pronunciar las palabras correctamente y evitar errores comunes."
+    }
+}

@@ -2,11 +2,14 @@ import CompanionCard from '@/components/CompanionCard'
 import CompanionsList from '@/components/CompanionsList'
 import CTA from '@/components/CTA'
 import { recentSessions } from '@/constants'
+import { getTranslations } from 'next-intl/server'
 
-const Page = () => {
+const Page = async () => {
+    const t = await getTranslations('home')
+
     return (
         <main>
-            <h1>Popular Companions</h1>
+            <h1>{t('popular')}</h1>
             <section className="home-section">
                 <CompanionCard
                     id={'123'}
@@ -36,7 +39,7 @@ const Page = () => {
 
             <section className="home-section">
                 <CompanionsList
-                    title={'Recently completed sessions'}
+                    title={t('recent')}
                     companions={recentSessions}
                     classNames="w-2/3 max-lg:w-full"
                 />

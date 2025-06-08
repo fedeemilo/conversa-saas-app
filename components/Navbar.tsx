@@ -1,9 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import NavItems from '@/components/NavItems'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { useTranslations } from 'next-intl'
 
 const Navbar = () => {
+    const t = useTranslations('navbar')
+
     return (
         <nav className="navbar">
             <Link href={'/'}>
@@ -13,9 +17,10 @@ const Navbar = () => {
             </Link>
             <div className="flex items-center gap-8">
                 <NavItems />
+                <LanguageSwitcher />
                 <SignedOut>
                     <SignInButton>
-                        <button className="btn-signin">Sign In</button>
+                        <button className="btn-signin">{t('signin')}</button>
                     </SignInButton>
                 </SignedOut>
                 <SignedIn>

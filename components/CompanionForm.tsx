@@ -25,6 +25,8 @@ import { subjects } from '@/constants'
 import { Textarea } from '@/components/ui/textarea'
 import { createCompanion } from '@/lib/actions/companion.actions'
 import { redirect } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { useTranslatedSubject } from '@/lib/subject'
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Companion is required.' }),
@@ -36,6 +38,9 @@ const formSchema = z.object({
 })
 
 const CompanionForm = () => {
+    const t = useTranslations('form')
+    const translateSubject = useTranslatedSubject()
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -67,15 +72,15 @@ const CompanionForm = () => {
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Companion Name</FormLabel>
+                            <FormLabel>{t('name')}</FormLabel>
                             <FormControl>
                                 <Input
-                                    placeholder="Enter the companion name"
+                                    placeholder={t('name_placeholder')}
                                     className="input"
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>This is your public display name.</FormDescription>
+
                             <FormMessage />
                         </FormItem>
                     )}
@@ -85,7 +90,7 @@ const CompanionForm = () => {
                     name="subject"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Subject</FormLabel>
+                            <FormLabel>{t('subject')}</FormLabel>
                             <FormControl>
                                 <Select
                                     onValueChange={field.onChange}
@@ -93,7 +98,7 @@ const CompanionForm = () => {
                                     defaultValue={field.value}
                                 >
                                     <SelectTrigger className="input capitalize">
-                                        <SelectValue placeholder="Select the subject" />
+                                        <SelectValue placeholder={t('subject_placeholder')} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {subjects.map((subject) => (
@@ -102,14 +107,12 @@ const CompanionForm = () => {
                                                 value={subject}
                                                 className="capitalize"
                                             >
-                                                {subject}
+                                                {translateSubject(subject)}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
                             </FormControl>
-                            <FormDescription>This is your public display name.</FormDescription>
-                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -118,15 +121,14 @@ const CompanionForm = () => {
                     name="topic"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>What should the companion help with?</FormLabel>
+                            <FormLabel>{t('topic')}</FormLabel>
                             <FormControl>
                                 <Textarea
-                                    placeholder="Ex. Derivatives & Integrals"
+                                    placeholder={t('topic_placeholder')}
                                     className="input"
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>This is your public display name.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -137,7 +139,7 @@ const CompanionForm = () => {
                     name="voice"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Voice</FormLabel>
+                            <FormLabel>{t('voice')}</FormLabel>
                             <FormControl>
                                 <Select
                                     onValueChange={field.onChange}
@@ -145,19 +147,18 @@ const CompanionForm = () => {
                                     defaultValue={field.value}
                                 >
                                     <SelectTrigger className="input">
-                                        <SelectValue placeholder="Select the voice" />
+                                        <SelectValue placeholder={t('voice_placeholder')} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="male" className="capitalize">
-                                            Male
+                                            {t('voice_male')}
                                         </SelectItem>
                                         <SelectItem value="female" className="capitalize">
-                                            Female
+                                            {t('voice_female')}
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
-                            <FormDescription>This is your public display name.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -168,7 +169,7 @@ const CompanionForm = () => {
                     name="style"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Style</FormLabel>
+                            <FormLabel>{t('style')}</FormLabel>
                             <FormControl>
                                 <Select
                                     onValueChange={field.onChange}
@@ -176,7 +177,7 @@ const CompanionForm = () => {
                                     defaultValue={field.value}
                                 >
                                     <SelectTrigger className="input">
-                                        <SelectValue placeholder="Select the style" />
+                                        <SelectValue placeholder={t('style_placeholder')} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="formal" className="capitalize">
@@ -188,7 +189,6 @@ const CompanionForm = () => {
                                     </SelectContent>
                                 </Select>
                             </FormControl>
-                            <FormDescription>This is your public display name.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -198,7 +198,7 @@ const CompanionForm = () => {
                     name="duration"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Estimated session duration in minutes</FormLabel>
+                            <FormLabel>{t('duration')}</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -207,13 +207,12 @@ const CompanionForm = () => {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>This is your public display name.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <Button type="submit" className="w-full cursor-pointer">
-                    Build Your Companion
+                    {t('submit')}
                 </Button>
             </form>
         </Form>

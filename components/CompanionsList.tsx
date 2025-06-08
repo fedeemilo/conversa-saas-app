@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Table,
     TableBody,
@@ -9,6 +11,8 @@ import {
 import { cn, getSubjectColor } from '@/lib/utils'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import { useTranslatedSubject } from '@/lib/subject'
 
 interface CompanionsListProps {
     title: string
@@ -17,16 +21,19 @@ interface CompanionsListProps {
 }
 
 const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) => {
+    const t = useTranslations('companions-list')
+    const translateSubject = useTranslatedSubject()
+
     return (
         <article className={cn('companion-list', classNames)}>
-            <h2 className="text-3xl font-bold">Recently completed lessons</h2>
+            <h2 className="text-3xl font-bold">{t('title')}</h2>
 
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-2/3 text-lg">Lessons</TableHead>
-                        <TableHead className="text-lg">Subject</TableHead>
-                        <TableHead className="text-right text-lg">Duration</TableHead>
+                        <TableHead className="w-2/3 text-lg">{t('lessons')}</TableHead>
+                        <TableHead className="text-lg">{t('subject')}</TableHead>
+                        <TableHead className="text-right text-lg">{t('duration')}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -54,7 +61,9 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                                 </Link>
                             </TableCell>
                             <TableCell>
-                                <div className="subject-badge w-fit max-md:hidden">{subject}</div>
+                                <div className="subject-badge w-fit max-md:hidden">
+                                    {translateSubject(subject)}
+                                </div>
                                 <div
                                     className="flex w-fit items-center justify-center rounded-lg p-2 md:hidden"
                                     style={{ backgroundColor: getSubjectColor(subject) }}
@@ -70,7 +79,8 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                             <TableCell>
                                 <div className="flex w-full items-center justify-end gap-2">
                                     <p className="text-2xl">
-                                        {duration} <span className="max-md:hidden">mins</span>
+                                        {duration}{' '}
+                                        <span className="max-md:hidden">{t('mins')}</span>
                                     </p>
                                     <Image
                                         src={'/icons/clock.svg'}

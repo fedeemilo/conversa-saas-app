@@ -1,5 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { useTranslatedSubject } from '@/lib/subject'
 
 interface CompanionCardProps {
     id: string
@@ -11,10 +15,13 @@ interface CompanionCardProps {
 }
 
 const CompanionCard = ({ id, name, topic, subject, duration, color }: CompanionCardProps) => {
+    const t = useTranslations()
+    const translateSubject = useTranslatedSubject()
+
     return (
         <article className="companion-card" style={{ backgroundColor: color }}>
             <div className="flex items-center justify-between">
-                <div className="subject-badge">{subject}</div>
+                <div className="subject-badge">{translateSubject(subject)}</div>
                 <button className="companion-bookmark">
                     <Image src={'/icons/bookmark.svg'} alt={'bookmark'} width={12.5} height={15} />
                 </button>
@@ -24,11 +31,15 @@ const CompanionCard = ({ id, name, topic, subject, duration, color }: CompanionC
 
             <div className="flex items-center gap-2">
                 <Image src={'/icons/clock.svg'} alt={'duration'} width={13.5} height={13.5} />
-                <p className="textsm">{duration} minutes</p>
+                <p className="textsm">
+                    {duration} {t('companion-session.minutes')}
+                </p>
             </div>
 
             <Link href={`/companions/${id}`} className="w-full">
-                <button className="btn-primary w-full justify-center">Launch Lesson</button>
+                <button className="btn-primary w-full justify-center">
+                    {t('companion-card.launch')}
+                </button>
             </Link>
         </article>
     )
