@@ -12,7 +12,13 @@ const Navbar = () => {
         <nav className="navbar">
             <Link href={'/'} prefetch={true}>
                 <div className="flex cursor-pointer items-center gap-2.5">
-                    <Image src={'/images/logo.svg'} alt={'logo'} width={66} height={64} />
+                    <Image
+                        src={'/images/logo.svg'}
+                        alt={'logo'}
+                        width={86}
+                        height={64}
+                        style={{ transform: 'scale(1.8)' }}
+                    />
                 </div>
             </Link>
             <div className="flex items-center gap-8">
