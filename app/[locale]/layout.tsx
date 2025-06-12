@@ -20,7 +20,7 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-    title: 'Conversa',
+    title: 'Eduvoice.ai',
     description: 'Real-time AI Teaching Platform'
 }
 

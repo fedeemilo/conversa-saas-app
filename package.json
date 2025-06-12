@@ -1,6 +1,6 @@
 {
-    "name": "conversa",
-    "version": "1.0.2",
+    "name": "eduvoice-ai",
+    "version": "1.0.3",
     "private": true,
     "scripts": {
         "dev": "next dev --turbopack",
