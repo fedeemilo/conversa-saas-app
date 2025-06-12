@@ -1,4 +1,4 @@
-# Conversa
+# Eduvoice.ai
 
 **Conversa** es una plataforma educativa impulsada por IA que permite a los usuarios crear y conversar con tutores personalizados en tiempo real usando voz. La app está construida con Next.js 15, Vapi AI, Clerk, Supabase y Sentry, y soporta internacionalización dinámica.
 
