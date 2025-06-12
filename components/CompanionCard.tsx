@@ -1,5 +1,7 @@
 'use client'
 
+import { useLocale } from 'next-intl'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useTranslatedSubject } from '@/lib/subject'
@@ -33,6 +35,10 @@ const CompanionCard = ({
     const pathname = usePathname()
     const { loading, handleRedirect } = useRedirectWithLoader()
 
+    const locale = useLocale()
+    const [translatedName, setTranslatedName] = useState(name)
+    const [translatedTopic, setTranslatedTopic] = useState(topic)
+
     const handleBookmark = async () => {
         if (bookmarked) {
             await removeBookmark(id, pathname)
@@ -40,6 +46,32 @@ const CompanionCard = ({
             await addBookmark(id, pathname)
         }
     }
+
+    useEffect(() => {
+        const translate = async () => {
+            const targetLang = locale === 'es' ? 'es' : 'en'
+
+            try {
+                const res = await fetch('/api/translate', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        texts: [name, topic],
+                        targetLang
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+
+                const data = await res.json()
+                setTranslatedName(data.translations[0])
+                setTranslatedTopic(data.translations[1])
+            } catch (err) {
+                console.error('Error translating card content:', err)
+            }
+        }
+
+        translate()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <article
@@ -58,8 +90,8 @@ const CompanionCard = ({
                 </button>
             </div>
 
-            <h2 className="text-2xl font-bold">{name}</h2>
-            <p className="text-sm">{topic}</p>
+            <h2 className="text-2xl font-bold">{translatedName}</h2>
+            <p className="text-sm">{translatedTopic}</p>
 
             <div className="flex items-center gap-2">
                 <Image src="/icons/clock.svg" alt="duration" width={13.5} height={13.5} />

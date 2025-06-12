@@ -95,12 +95,44 @@
 
 ---
 
-## 📅 Roadmap sugerido
+## 🚀 Roadmap de Desarrollo
 
-* [ ] Agregar panel de admin para gestionar companions
-* [ ] Sistema de puntuación de sesiones
-* [ ] Exportar conversaciones o resúmen por texto
-* [ ] Subida del proyecto a Vercel + dominio custom
+### ✅ Estado actual
+- Primera versión funcional desplegada.
+- Interacción por voz con IA operativa en español e inglés.
+- Sistema de tutores personalizables según voz, tema y estilo.
+
+### 🔧 Mejoras planificadas
+
+#### 🔊 Mejora en la calidad del habla en español
+- [x] Identificar problemas de pronunciación.
+- [x] Cambiar proveedor a Azure con voces `Neural` específicas.
+- [x] Implementar lógica dinámica de selección de voz según género/estilo/idioma.
+
+#### 💳 Integración con Stripe
+- [ ] Configurar Stripe en modo test (checkout básico).
+- [ ] Validar flujo de suscripción y generación de sesiones seguras.
+- [ ] Definir entorno de desarrollo vs. producción para pagos.
+
+#### 🪙 Evaluación de planes de suscripción y features premium
+- [ ] Auditar los features actuales para determinar cuáles deben estar limitados por plan.
+- [ ] Diseñar al menos 2 niveles de suscripción (ej: Gratis y Pro).
+- [ ] Agregar validaciones en frontend/backend para restringir el acceso a funciones según plan.
+
+#### 💡 Nuevos features atractivos para el usuario
+- [ ] Analizar métricas y feedback para priorizar mejoras.
+- [ ] Sugerencias iniciales:
+  - Personalización de voz (tono, velocidad).
+  - Tutor especializado por materia.
+  - Guardado de sesiones y transcripciones.
+  - Recomendaciones inteligentes post-sesión.
+
+#### 🐞 Corrección de errores visuales y experiencia mobile
+- [ ] Revisar fallos de visualización en dispositivos móviles.
+- [ ] Implementar menú hamburguesa en navbar para pantallas pequeñas.
+- [ ] Asegurar comportamiento responsive en todas las páginas.
+
+---
 
 ---
 

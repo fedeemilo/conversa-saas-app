@@ -13,7 +13,7 @@ export const voices = {
     male: {
         casual: {
             en: '2BJW5coyhAzSr8STdHbE',
-            es: '94zOad0g7T7K4oa7zhDq'
+            es: 'HAsl3FenyWHYwECSP6Hl'
         },
         formal: {
             en: 'c6SfcYrb2t09NHXiT80T',
@@ -27,7 +27,7 @@ export const voices = {
         },
         formal: {
             en: 'sarah',
-            es: '2Lb1en5ujrODDIqmp7F3'
+            es: 'x5IDPSl4ZUbhosMmVFTk'
         }
     }
 }

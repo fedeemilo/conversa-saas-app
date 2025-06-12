@@ -3,9 +3,10 @@
 import { CreateAssistantDTO, DeepgramTranscriber } from '@vapi-ai/web/dist/api'
 import { getTranslations } from 'next-intl/server'
 import { getVoiceId } from '@/lib/utils'
+import { splitTextForTTS, getAzureVoiceId } from '@/lib/assistant-utils'
 
 export const configureAssistant = async (
-    voice: 'male' | 'female',
+    gender: 'male' | 'female',
     style: 'casual' | 'formal',
     locale: 'es' | 'en',
     subject: string,
@@ -13,7 +14,12 @@ export const configureAssistant = async (
 ): Promise<CreateAssistantDTO> => {
     const t = await getTranslations({ locale, namespace: 'vapi' })
 
-    const voiceId = getVoiceId(voice, style, locale)
+    const voiceId = getAzureVoiceId(locale, gender, style)
+    const systemPromptRaw = (t as any).raw('systemPrompt', { topic, subject, style })
+    const userPromptRaw = t('userPrompt')
+
+    const processedSystemPrompt = splitTextForTTS(systemPromptRaw).join(' ')
+    const processedUserPrompt = splitTextForTTS(userPromptRaw).join(' ')
 
     const transcriber: DeepgramTranscriber =
         locale === 'es'
@@ -33,13 +39,8 @@ export const configureAssistant = async (
         firstMessage: (t as any).raw('firstMessage', { topic }),
         transcriber,
         voice: {
-            provider: '11labs',
-            voiceId,
-            stability: 0.4,
-            similarityBoost: 0.8,
-            speed: 0.9,
-            style: 0.5,
-            useSpeakerBoost: true
+            provider: 'azure',
+            voiceId
         },
         model: {
             provider: 'openai',
@@ -48,11 +49,11 @@ export const configureAssistant = async (
             messages: [
                 {
                     role: 'system',
-                    content: (t as any).raw('systemPrompt', { topic, subject, style })
+                    content: processedSystemPrompt
                 },
                 {
                     role: 'user',
-                    content: t('userPrompt')
+                    content: processedUserPrompt
                 }
             ]
         },
