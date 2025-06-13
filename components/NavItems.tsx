@@ -5,7 +5,12 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
 
-const NavItems = () => {
+interface NavItemsProps {
+    isMobile?: boolean
+    onClickItem?: () => void
+}
+
+const NavItems = ({ isMobile = false, onClickItem }: NavItemsProps) => {
     const pathname = usePathname()
     const t = useTranslations('navbar')
 
@@ -16,12 +21,16 @@ const NavItems = () => {
     ]
 
     return (
-        <nav className="flex items-center gap-4">
+        <nav className={cn(isMobile ? 'flex flex-col gap-4' : 'flex items-center gap-4')}>
             {navItems.map(({ label, href }) => (
                 <Link
-                    href={href}
                     key={href}
-                    className={cn(pathname === href && 'text-primary font-semibold')}
+                    href={href}
+                    onClick={onClickItem}
+                    className={cn(
+                        isMobile ? 'font-medium text-gray-800' : '',
+                        pathname === href && 'text-primary font-semibold'
+                    )}
                 >
                     {label}
                 </Link>

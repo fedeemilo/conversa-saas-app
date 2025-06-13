@@ -26,6 +26,8 @@ import { createCompanion } from '@/lib/actions/companion.actions'
 import { redirect } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useTranslatedSubject } from '@/lib/subject'
+import { useRedirectWithLoader } from '@/hooks/useRedirectWithLoader'
+import { Loader2Icon } from 'lucide-react'
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Companion is required.' }),
@@ -39,6 +41,7 @@ const formSchema = z.object({
 const CompanionForm = () => {
     const t = useTranslations('form')
     const translateSubject = useTranslatedSubject()
+    const { loading, handleRedirect } = useRedirectWithLoader()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -56,7 +59,7 @@ const CompanionForm = () => {
         const companion = await createCompanion(values)
 
         if (companion) {
-            redirect(`/companions/${companion.id}`)
+            handleRedirect(`/companions/${companion.id}`)
         } else {
             console.log('Failed to create a companion')
             redirect('/')
@@ -211,7 +214,14 @@ const CompanionForm = () => {
                     )}
                 />
                 <Button type="submit" className="w-full cursor-pointer">
-                    {t('submit')}
+                    {loading ? (
+                        <>
+                            <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                            {t('submit')}
+                        </>
+                    ) : (
+                        t('submit')
+                    )}
                 </Button>
             </form>
         </Form>

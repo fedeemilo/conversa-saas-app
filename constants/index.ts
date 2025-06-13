@@ -9,76 +9,25 @@ export const subjectsColors = {
     economics: '#C8FFDF'
 }
 
-export const voices = {
-    male: {
-        casual: {
-            en: '2BJW5coyhAzSr8STdHbE',
-            es: 'HAsl3FenyWHYwECSP6Hl'
-        },
-        formal: {
-            en: 'c6SfcYrb2t09NHXiT80T',
-            es: 'sDh3eviBhiuHKi0MjTNq'
-        }
-    },
-    female: {
-        casual: {
-            en: 'ZIlrSGI4jZqobxRKprJz',
-            es: 'UOIqAnmS11Reiei1Ytkc'
-        },
-        formal: {
-            en: 'sarah',
-            es: 'x5IDPSl4ZUbhosMmVFTk'
-        }
-    }
-}
-
-export const recentSessions = [
+export const plans = [
     {
-        id: '1',
-        subject: 'science',
-        name: 'Neura the Brainy Explorer',
-        topic: 'Neural Network of the Brain',
-        duration: 45,
-        color: '#E5D0FF'
+        name: 'Plan Básico',
+        price: 'Gratis',
+        features: ['10 conversaciones por mes', '3 tutores activos', 'Resúmenes básicos de sesión'],
+        cta: 'Empezar Gratis',
+        highlight: false
     },
     {
-        id: '2',
-        subject: 'maths',
-        name: 'Countsy the Number Wizard',
-        topic: 'Derivatives & Integrals',
-        duration: 30,
-        color: '#FFDA6E'
-    },
-    {
-        id: '3',
-        subject: 'language',
-        name: 'Verba the Vocabulary Builder',
-        topic: 'English Literature',
-        duration: 30,
-        color: '#BDE7FF'
-    },
-    {
-        id: '4',
-        subject: 'coding',
-        name: 'Codey the Logic Hacker',
-        topic: 'Intro to If-Else Statements',
-        duration: 45,
-        color: '#FFC8E4'
-    },
-    {
-        id: '5',
-        subject: 'history',
-        name: 'Memo, the Memory Keeper',
-        topic: 'World Wars: Causes & Consequences',
-        duration: 15,
-        color: '#FFECC8'
-    },
-    {
-        id: '6',
-        subject: 'economics',
-        name: 'The Market Maestro',
-        topic: 'The Basics of Supply & Demand',
-        duration: 10,
-        color: '#C8FFDF'
+        name: 'Plan Pro',
+        price: '$2900 ARS / mes',
+        features: [
+            'Conversaciones ilimitadas',
+            'Tutores ilimitados',
+            'Historial de sesiones',
+            'Resúmenes avanzados',
+            'Reportes de progreso mensual'
+        ],
+        cta: 'Mejorar al Pro',
+        highlight: true
     }
 ]

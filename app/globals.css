@@ -37,7 +37,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --background: oklch(0.982 0.004 91.446);
+  --background: oklch(0.98 0.016 73.684);
   --foreground: oklch(0.145 0 0);
 }
 
@@ -169,7 +169,7 @@ body {
     @apply bg-primary text-white rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2;
   }
   .navbar {
-    @apply  flex items-center justify-between mx-auto w-full px-14 py-4 bg-white max-sm:px-4;
+    @apply  flex items-center justify-between mx-auto w-full px-14 py-6 bg-white max-sm:px-4;
   }
   .btn-signin {
     @apply border border-black rounded-4xl px-4 py-2.5 text-sm font-semibold flex items-center gap-2 cursor-pointer;
