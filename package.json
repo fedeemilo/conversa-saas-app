@@ -12,6 +12,7 @@
         "@clerk/nextjs": "^6.20.2",
         "@hookform/resolvers": "^5.0.1",
         "@jsmastery/utils": "^1.0.2",
+        "@lottiefiles/dotlottie-react": "^0.14.1",
         "@opentelemetry/core": "^2.0.1",
         "@radix-ui/react-accordion": "^1.2.11",
         "@radix-ui/react-label": "^2.1.7",
