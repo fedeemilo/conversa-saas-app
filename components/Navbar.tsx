@@ -7,39 +7,17 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { useTranslations } from 'next-intl'
 import { useRef, useState } from 'react'
-import HamburgerAnimation from '@/components/HamburgerAnimation'
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+import HamburgerButton from '@/components/HamburgerButton'
 
 const Navbar = () => {
     const t = useTranslations('navbar')
     const [menuOpen, setMenuOpen] = useState(false)
-    const [instance, setInstance] = useState<any>(null)
     const menuRef = useRef<HTMLDivElement | null>(null)
 
     const toggleMenu = () => {
-        if (menuOpen) {
-            setClose()
-            setMenuOpen(true)
-        } else {
-            setOpen()
-            setMenuOpen(false)
-        }
         setMenuOpen((prev) => !prev)
     }
     const closeMenu = () => setMenuOpen(false)
-
-    const setOpen = () => {
-        if (!instance) return
-        instance.setSegment(0, 40)
-        instance.play()
-    }
-
-    const setClose = () => {
-        if (!instance) return
-        instance.setFrame(40)
-        instance.setSegment(40, 100)
-        instance.play()
-    }
 
     return (
         <nav className="navbar relative">
@@ -77,20 +55,11 @@ const Navbar = () => {
                     <UserButton />
                 </SignedIn>
 
-                <button
-                    onClick={toggleMenu}
-                    aria-label="Toggle menu"
-                    className="relative h-20 w-15 shrink-0 overflow-hidden"
-                >
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <DotLottieReact
-                            src="https://lottie.host/808ed4b5-76f6-4881-ba52-4b5f7707f4bd/2QOQ111j3q.lottie"
-                            autoplay={false}
-                            loop={false}
-                            dotLottieRefCallback={setInstance}
-                        />
-                    </div>
-                </button>
+                <HamburgerButton
+                    isOpen={menuOpen}
+                    setIsOpen={setMenuOpen}
+                    className="mx-3 h-6 w-6"
+                />
             </div>
             {/* Mobile menu */}
             <div

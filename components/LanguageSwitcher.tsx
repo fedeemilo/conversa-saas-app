@@ -18,7 +18,7 @@ export default function LanguageSwitcher() {
         <select
             onChange={handleChange}
             value={locale}
-            className="cursor-pointer rounded bg-white px-2 py-1 text-black"
+            className="cursor-pointer rounded bg-white py-1 text-black"
         >
             <option value="en">EN</option>
             <option value="es">ES</option>
