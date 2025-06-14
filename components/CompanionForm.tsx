@@ -24,10 +24,10 @@ import { subjects } from '@/constants'
 import { Textarea } from '@/components/ui/textarea'
 import { createCompanion } from '@/lib/actions/companion.actions'
 import { redirect } from 'next/navigation'
-import { useTranslations } from 'next-intl'
 import { useTranslatedSubject } from '@/lib/subject'
 import { useRedirectWithLoader } from '@/hooks/useRedirectWithLoader'
 import { Loader2Icon } from 'lucide-react'
+import es from '@/messages/es.json'
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Companion is required.' }),
@@ -39,7 +39,7 @@ const formSchema = z.object({
 })
 
 const CompanionForm = () => {
-    const t = useTranslations('form')
+    const t = es['form']
     const translateSubject = useTranslatedSubject()
     const { loading, handleRedirect } = useRedirectWithLoader()
 
@@ -74,10 +74,10 @@ const CompanionForm = () => {
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{t('name')}</FormLabel>
+                            <FormLabel>{t.name}</FormLabel>
                             <FormControl>
                                 <Input
-                                    placeholder={t('name_placeholder')}
+                                    placeholder={t.name_placeholder}
                                     className="input"
                                     {...field}
                                 />
@@ -92,7 +92,7 @@ const CompanionForm = () => {
                     name="subject"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{t('subject')}</FormLabel>
+                            <FormLabel>{t.subject}</FormLabel>
                             <FormControl>
                                 <Select
                                     onValueChange={field.onChange}
@@ -100,7 +100,7 @@ const CompanionForm = () => {
                                     defaultValue={field.value}
                                 >
                                     <SelectTrigger className="input capitalize">
-                                        <SelectValue placeholder={t('subject_placeholder')} />
+                                        <SelectValue placeholder={t.subject_placeholder} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {subjects.map((subject) => (
@@ -123,10 +123,10 @@ const CompanionForm = () => {
                     name="topic"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{t('topic')}</FormLabel>
+                            <FormLabel>{t.topic}</FormLabel>
                             <FormControl>
                                 <Textarea
-                                    placeholder={t('topic_placeholder')}
+                                    placeholder={t.topic_placeholder}
                                     className="input"
                                     {...field}
                                 />
@@ -141,7 +141,7 @@ const CompanionForm = () => {
                     name="voice"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{t('voice')}</FormLabel>
+                            <FormLabel>{t.voice}</FormLabel>
                             <FormControl>
                                 <Select
                                     onValueChange={field.onChange}
@@ -149,14 +149,14 @@ const CompanionForm = () => {
                                     defaultValue={field.value}
                                 >
                                     <SelectTrigger className="input">
-                                        <SelectValue placeholder={t('voice_placeholder')} />
+                                        <SelectValue placeholder={t.voice_placeholder} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="male" className="capitalize">
-                                            {t('voice_male')}
+                                            {t.voice_male}
                                         </SelectItem>
                                         <SelectItem value="female" className="capitalize">
-                                            {t('voice_female')}
+                                            {t.voice_female}
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -171,7 +171,7 @@ const CompanionForm = () => {
                     name="style"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{t('style')}</FormLabel>
+                            <FormLabel>{t.style}</FormLabel>
                             <FormControl>
                                 <Select
                                     onValueChange={field.onChange}
@@ -179,7 +179,7 @@ const CompanionForm = () => {
                                     defaultValue={field.value}
                                 >
                                     <SelectTrigger className="input">
-                                        <SelectValue placeholder={t('style_placeholder')} />
+                                        <SelectValue placeholder={t.style_placeholder} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="formal" className="capitalize">
@@ -200,7 +200,7 @@ const CompanionForm = () => {
                     name="duration"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{t('duration')}</FormLabel>
+                            <FormLabel>{t.duration}</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -217,10 +217,10 @@ const CompanionForm = () => {
                     {loading ? (
                         <>
                             <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
-                            {t('submit')}
+                            {t.submit}
                         </>
                     ) : (
-                        t('submit')
+                        t.submit
                     )}
                 </Button>
             </form>

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { useTranslations } from 'next-intl'
+import es from '@/messages/es.json'
 
 interface NavItemsProps {
     isMobile?: boolean
@@ -12,12 +12,12 @@ interface NavItemsProps {
 
 const NavItems = ({ isMobile = false, onClickItem }: NavItemsProps) => {
     const pathname = usePathname()
-    const t = useTranslations('navbar')
+    const t = es['navbar']
 
     const navItems = [
-        { label: t('home'), href: '/' },
-        { label: t('companions'), href: '/companions' },
-        { label: t('journey'), href: '/my-journey' }
+        { label: t.home, href: '/' },
+        { label: t.companions, href: '/companions' },
+        { label: t.journey, href: '/my-journey' }
     ]
 
     return (

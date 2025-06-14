@@ -7,7 +7,6 @@ import Image from 'next/image'
 import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import soundwaves from '@/constants/soundwaves.json'
 import { configureAssistant } from '@/lib/assistant.server'
-import { useLocale } from 'next-intl'
 import { addToSessionHistory } from '@/lib/actions/companion.actions'
 import * as Sentry from '@sentry/nextjs'
 
@@ -35,8 +34,6 @@ const CompanionComponent = ({
     const [messages, setMessages] = useState<SavedMessage[]>([])
 
     const lottieRef = useRef<LottieRefCurrentProps>(null)
-
-    const locale = useLocale()
 
     useEffect(() => {
         if (lottieRef) {
@@ -107,13 +104,7 @@ const CompanionComponent = ({
             serverMessages: []
         }
 
-        const assistant = await configureAssistant(
-            voice,
-            style,
-            locale as 'es' | 'en',
-            subject,
-            topic
-        )
+        const assistant = await configureAssistant(voice, style, 'es', subject, topic)
 
         // @ts-expect-error properties are ok
         await vapi.start(assistant, assistantOverrides)

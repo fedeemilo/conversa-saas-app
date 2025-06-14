@@ -1,9 +1,8 @@
 'use server'
 
 import { CreateAssistantDTO, DeepgramTranscriber } from '@vapi-ai/web/dist/api'
-import { getTranslations } from 'next-intl/server'
-import { getVoiceId } from '@/lib/utils'
-import { splitTextForTTS, getAzureVoiceId } from '@/lib/assistant-utils'
+import { getAzureVoiceId } from '@/lib/assistant-utils'
+import es from '@/messages/es.json'
 
 export const configureAssistant = async (
     gender: 'male' | 'female',
@@ -12,14 +11,21 @@ export const configureAssistant = async (
     subject: string,
     topic: string
 ): Promise<CreateAssistantDTO> => {
-    const t = await getTranslations({ locale, namespace: 'vapi' })
-
+    const t = es['vapi']
     const voiceId = getAzureVoiceId(locale, gender, style)
-    const systemPromptRaw = (t as any).raw('systemPrompt', { topic, subject, style })
-    const userPromptRaw = t('userPrompt')
 
-    const processedSystemPrompt = splitTextForTTS(systemPromptRaw).join(' ')
-    const processedUserPrompt = splitTextForTTS(userPromptRaw).join(' ')
+    const tutorPrompt = `
+        Eres un tutor experto en ${subject}, y estás dando una clase por voz en tiempo real.
+        
+        Guía del tutor:
+        - Habla en español latino claro y natural.
+        - Imagina que estás frente a un alumno argentino o latinoamericano.
+        - Enseña el tema "${topic}" con frases breves y bien puntuadas.
+        - No uses palabras rebuscadas ni traducciones literales del inglés.
+        - Conversá de forma ${style}.
+        - No incluyas emojis ni símbolos especiales.
+        - Si el estudiante dice "Para", interrumpí tu explicación y esperá que vuelva a hablar.
+        `.trim()
 
     const transcriber: DeepgramTranscriber =
         locale === 'es'
@@ -35,8 +41,8 @@ export const configureAssistant = async (
               }
 
     return {
-        name: t('name'),
-        firstMessage: (t as any).raw('firstMessage', { topic }),
+        name: t.name,
+        firstMessage: `Hola, comencemos la sesión. Hoy hablaremos sobre ${topic}.`,
         transcriber,
         voice: {
             provider: 'azure',
@@ -49,11 +55,7 @@ export const configureAssistant = async (
             messages: [
                 {
                     role: 'system',
-                    content: processedSystemPrompt
-                },
-                {
-                    role: 'user',
-                    content: processedUserPrompt
+                    content: tutorPrompt
                 }
             ]
         },

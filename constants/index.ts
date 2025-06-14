@@ -11,6 +11,7 @@ export const subjectsColors = {
 
 export const plans = [
     {
+        id: 'free',
         name: 'Plan Básico',
         price: 'Gratis',
         features: ['10 conversaciones por mes', '3 tutores activos', 'Resúmenes básicos de sesión'],
@@ -18,6 +19,7 @@ export const plans = [
         highlight: false
     },
     {
+        id: 'pro',
         name: 'Plan Pro',
         price: '$2900 ARS / mes',
         features: [
@@ -31,3 +33,8 @@ export const plans = [
         highlight: true
     }
 ]
+
+export const PLANS = {
+    FREE: 'free',
+    PRO: 'pro'
+} as const

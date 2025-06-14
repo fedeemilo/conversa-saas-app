@@ -1,11 +1,11 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import es from '@/messages/es.json'
 
 export const useTranslatedSubject = () => {
-    const t = useTranslations('subjects')
+    const t = es['subjects'] as any
 
     return (subject: string) => {
-        return t(subject.toLowerCase())
+        return t[subject].toLowerCase()
     }
 }

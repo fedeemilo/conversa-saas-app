@@ -3,10 +3,10 @@ import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { getSubjectColor } from '@/lib/utils'
 import Image from 'next/image'
-import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 import CompanionSessionSkeleton from '@/components/CompanionSessionSkeleton'
 import CompanionClientWrapper from '@/components/CompanionClientWrapper'
+import es from '@/messages/es.json'
 
 interface CompanionSessionPageProps {
     params: Promise<{ id: string; locale: string }>
@@ -18,8 +18,8 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
     const companion = await getCompanion(id)
     const user = await currentUser()
 
-    const t = await getTranslations('companion-session')
-    const tCompanion = await getTranslations('companion-component')
+    const t = es['companion-session']
+    const tCompanion = es['companion-component']
 
     if (!user) redirect('/sign-in')
     if (!companion) redirect('/companions')
@@ -46,7 +46,7 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
                     </div>
                 </div>
                 <div className="items-center text-2xl max-md:hidden">
-                    {duration} {t('minutes')}
+                    {duration} {t.minutes}
                 </div>
             </article>
             <Suspense fallback={<CompanionSessionSkeleton />}>
@@ -56,11 +56,11 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
                     userName={user.firstName}
                     userImage={user.imageUrl}
                     translations={{
-                        connecting: tCompanion('connecting'),
-                        turnOnMic: tCompanion('turn_on_microphone'),
-                        turnOffMic: tCompanion('turn_off_microphone'),
-                        startSession: tCompanion('start_session'),
-                        endSession: tCompanion('end_session')
+                        connecting: tCompanion.connecting,
+                        turnOnMic: tCompanion.turn_on_microphone,
+                        turnOffMic: tCompanion.turn_off_microphone,
+                        startSession: tCompanion.start_session,
+                        endSession: tCompanion.end_session
                     }}
                 />
             </Suspense>

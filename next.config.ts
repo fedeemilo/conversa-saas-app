@@ -1,6 +1,5 @@
 import { withSentryConfig } from '@sentry/nextjs'
-import { NextConfig } from 'next'
-import createNextIntlPlugin from 'next-intl/plugin'
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
     typescript: {
@@ -14,14 +13,12 @@ const nextConfig: NextConfig = {
     }
 }
 
-const withNextIntl = createNextIntlPlugin()
-
-export default withSentryConfig(withNextIntl(nextConfig), {
+export default withSentryConfig(nextConfig, {
     // For all available options, see:
     // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-    org: 'fedmilo',
-    project: 'eduvoice-app',
+    org: 'jsmpro',
+    project: 'jsm_converso',
 
     // Only print logs for uploading source maps in CI
     silent: !process.env.CI,

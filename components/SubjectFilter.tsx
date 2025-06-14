@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/select'
 import { subjects } from '@/constants'
 import useSearchFilter from '@/hooks/useSearchFilter'
-import { useTranslations } from 'next-intl'
 import { useTranslatedSubject } from '@/lib/subject'
+import es from '@/messages/es.json'
 
 const SubjectFilter = () => {
     const { searchQuery, setSearchQuery } = useSearchFilter({
@@ -18,16 +18,16 @@ const SubjectFilter = () => {
         resetValue: 'all'
     })
 
-    const t = useTranslations('subject-filter')
+    const t = es['subject-filter']
     const translateSubject = useTranslatedSubject()
 
     return (
         <Select onValueChange={setSearchQuery} value={searchQuery}>
             <SelectTrigger className="input capitalize">
-                <SelectValue placeholder={t('placeholder')} />
+                <SelectValue placeholder={t.placeholder} />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="all">{t('all')}</SelectItem>
+                <SelectItem value="all">{t.all}</SelectItem>
                 {subjects.map((subject) => (
                     <SelectItem key={subject} value={subject} className="capitalize">
                         {translateSubject(subject)}

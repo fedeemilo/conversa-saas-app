@@ -13,7 +13,7 @@ import {
 } from '@/lib/actions/companion.actions'
 import Image from 'next/image'
 import CompanionsList from '@/components/CompanionsList'
-import { getTranslations } from 'next-intl/server'
+import es from '@/messages/es.json'
 
 const Profile = async () => {
     const user = await currentUser()
@@ -24,7 +24,7 @@ const Profile = async () => {
     const sessionHistory = await getUserSessions(user.id)
     const bookmarkedCompanions = await getBookmarkedCompanions(user.id)
 
-    const t = await getTranslations('my-journey')
+    const t = es['my-journey']
 
     return (
         <main className="min-lg:w-3/4">
@@ -46,43 +46,43 @@ const Profile = async () => {
                             <Image src="/icons/check.svg" alt="checkmark" width={22} height={22} />
                             <p className="text-2xl font-bold">{sessionHistory.length}</p>
                         </div>
-                        <div>{t('lessons_completed')}</div>
+                        <div>{t.lessons_completed}</div>
                     </div>
                     <div className="flex h-fit flex-col gap-2 rounded-lg border border-black p-4">
                         <div className="flex items-center gap-2">
                             <Image src="/icons/cap.svg" alt="cap" width={22} height={22} />
                             <p className="text-2xl font-bold">{companions.length}</p>
                         </div>
-                        <div>{t('companions_created')}</div>
+                        <div>{t.companions_created}</div>
                     </div>
                 </div>
             </section>
             <Accordion type="multiple">
                 <AccordionItem value="bookmarks">
                     <AccordionTrigger className="text-2xl font-bold">
-                        {t('bookmarked_companions')} {`(${bookmarkedCompanions.length})`}
+                        {t.bookmarked_companions} {`(${bookmarkedCompanions.length})`}
                     </AccordionTrigger>
                     <AccordionContent>
                         <CompanionsList
                             companions={bookmarkedCompanions}
-                            title={t('bookmarked_companions')}
+                            title={t.bookmarked_companions}
                         />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="recent">
                     <AccordionTrigger className="text-2xl font-bold">
-                        {t('recent_sessions')}
+                        {t.recent_sessions}
                     </AccordionTrigger>
                     <AccordionContent>
-                        <CompanionsList title={t('recent_sessions')} companions={sessionHistory} />
+                        <CompanionsList title={t.recent_sessions} companions={sessionHistory} />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="companions">
                     <AccordionTrigger className="text-2xl font-bold">
-                        {t('my_companions')} {`(${companions.length})`}
+                        {t.my_companions} {`(${companions.length})`}
                     </AccordionTrigger>
                     <AccordionContent>
-                        <CompanionsList title={t('my_companions')} companions={companions} />
+                        <CompanionsList title={t.my_companions} companions={companions} />
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

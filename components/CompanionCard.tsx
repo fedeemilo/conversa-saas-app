@@ -1,13 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { useTranslations } from 'next-intl'
 import { useTranslatedSubject } from '@/lib/subject'
 import { removeBookmark, addBookmark } from '@/lib/actions/companion.actions'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Loader2Icon } from 'lucide-react'
 import { useRedirectWithLoader } from '@/hooks/useRedirectWithLoader'
+import es from '@/messages/es.json'
 
 interface CompanionCardProps {
     id: string
@@ -28,7 +28,8 @@ const CompanionCard = ({
     color,
     bookmarked
 }: CompanionCardProps) => {
-    const t = useTranslations()
+    const tCard = es['companion-card']
+    const tSession = es['companion-session']
     const translateSubject = useTranslatedSubject()
     const pathname = usePathname()
     const { loading, handleRedirect } = useRedirectWithLoader()
@@ -64,7 +65,7 @@ const CompanionCard = ({
             <div className="flex items-center gap-2">
                 <Image src="/icons/clock.svg" alt="duration" width={13.5} height={13.5} />
                 <p className="text-sm">
-                    {duration} {t('companion-session.minutes')}
+                    {duration} {tSession.minutes}
                 </p>
             </div>
 
@@ -76,10 +77,10 @@ const CompanionCard = ({
                     {loading ? (
                         <>
                             <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
-                            {t('companion-card.launch')}
+                            {tCard.launch}
                         </>
                     ) : (
-                        t('companion-card.launch')
+                        tCard.launch
                     )}
                 </Button>
             </div>
