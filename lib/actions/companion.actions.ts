@@ -3,6 +3,7 @@
 import { auth } from '@clerk/nextjs/server'
 import { createSupabaseClient } from '@/lib/supabase'
 import { revalidatePath } from 'next/cache'
+import { getUserPlan } from '@/lib/actions/user.actions'
 
 export const createCompanion = async (formData: CreateCompanion) => {
     const { userId: author } = await auth()
@@ -127,17 +128,24 @@ export const getUserCompanions = async (userId: string) => {
 }
 
 export const newCompanionPermissions = async () => {
-    const { userId, has } = await auth()
+    const { userId } = await auth()
     const supabase = createSupabaseClient()
+
+    if (!userId) throw new Error('No user ID found')
+
+    const plan = await getUserPlan()
 
     let limit = 0
 
-    if (has({ plan: 'pro' })) {
-        return true
-    } else if (has({ feature: '3_companion_limit' })) {
+    if (plan === 'pro') {
+        return true // sin límite
+    } else if (plan === 'basic') {
         limit = 3
-    } else if (has({ feature: '10_companion_limit' })) {
+    } else if (plan === 'premium') {
         limit = 10
+    } else {
+        // si no tiene plan asignado, no puede crear nada
+        return false
     }
 
     const { data, error } = await supabase
@@ -147,7 +155,7 @@ export const newCompanionPermissions = async () => {
 
     if (error) throw new Error(error.message)
 
-    const companionCount = data?.length
+    const companionCount = data?.length ?? 0
 
     return companionCount < limit
 }
