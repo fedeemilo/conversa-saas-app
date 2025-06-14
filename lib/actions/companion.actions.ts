@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs/server'
 import { createSupabaseClient } from '@/lib/supabase'
 import { revalidatePath } from 'next/cache'
 import { getUserPlan } from '@/lib/actions/user.actions'
+import { PLANS } from '@/constants'
 
 export const createCompanion = async (formData: CreateCompanion) => {
     const { userId: author } = await auth()
@@ -137,27 +138,22 @@ export const newCompanionPermissions = async () => {
 
     let limit = 0
 
-    if (plan === 'pro') {
-        return true // sin límite
-    } else if (plan === 'basic') {
-        limit = 3
-    } else if (plan === 'premium') {
+    if (plan === PLANS.PRO) {
         limit = 10
+    } else if (plan === PLANS.FREE) {
+        limit = 3
     } else {
-        // si no tiene plan asignado, no puede crear nada
         return false
     }
 
-    const { data, error } = await supabase
+    const { count, error } = await supabase
         .from('companions')
         .select('id', { count: 'exact' })
         .eq('author', userId)
 
     if (error) throw new Error(error.message)
 
-    const companionCount = data?.length ?? 0
-
-    return companionCount < limit
+    return (count ?? 0) < limit
 }
 
 // Bookmarks
@@ -195,7 +191,6 @@ export const removeBookmark = async (companionId: string, path: string) => {
     revalidatePath(path)
     return data
 }
-
 export const getBookmarkedCompanions = async (userId: string) => {
     const supabase = createSupabaseClient()
     const { data, error } = await supabase

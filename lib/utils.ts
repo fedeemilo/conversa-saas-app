@@ -9,3 +9,9 @@ export function cn(...inputs: ClassValue[]) {
 export const getSubjectColor = (subject: string) => {
     return subjectsColors[subject as keyof typeof subjectsColors]
 }
+
+export const capitalize = (str: string | null) => {
+    if (!str) return null
+
+    return str.charAt(0).toUpperCase() + str.slice(1)
+}

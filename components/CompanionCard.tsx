@@ -72,7 +72,7 @@ const CompanionCard = ({
             <div className="mt-auto pt-4">
                 <Button
                     onClick={() => handleRedirect(`/companions/${id}`)}
-                    className="w-full cursor-pointer justify-center"
+                    className="w-full cursor-pointer justify-center font-semibold transition"
                 >
                     {loading ? (
                         <>

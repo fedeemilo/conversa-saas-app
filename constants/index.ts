@@ -9,7 +9,16 @@ export const subjectsColors = {
     economics: '#C8FFDF'
 }
 
-export const plans = [
+interface Plan {
+    id: 'pro' | 'free'
+    name: string
+    price: string
+    features: string[]
+    cta: string
+    highlight?: boolean
+}
+
+export const plans: Plan[] = [
     {
         id: 'free',
         name: 'Plan Básico',

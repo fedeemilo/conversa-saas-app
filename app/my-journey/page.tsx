@@ -14,9 +14,16 @@ import {
 import Image from 'next/image'
 import CompanionsList from '@/components/CompanionsList'
 import es from '@/messages/es.json'
+import { getUserPlan } from '@/lib/actions/user.actions'
+import { PLANS } from '@/constants'
+import { Badge } from '@/components/ui/badge'
+import { BadgeCheckIcon } from 'lucide-react'
+import Link from 'next/link'
+import { capitalize } from '@/lib/utils'
 
 const Profile = async () => {
     const user = await currentUser()
+    const plan = await getUserPlan()
 
     if (!user) redirect('/sign-in')
 
@@ -26,15 +33,29 @@ const Profile = async () => {
 
     const t = es['my-journey']
 
+    console.log({ plan })
+
     return (
         <main className="min-lg:w-3/4">
             <section className="flex items-center justify-between gap-4 max-sm:flex-col">
                 <div className="flex items-center gap-4">
                     <Image src={user.imageUrl} alt={user.firstName!} width={110} height={110} />
                     <div className="flex flex-col gap-2">
-                        <h1 className="text-2xl font-bold">
-                            {user.firstName} {user.lastName}
-                        </h1>
+                        <div className="flex">
+                            <h1 className="text-2xl font-bold">
+                                {user.firstName} {user.lastName}
+                            </h1>
+                            {plan === PLANS.PRO && (
+                                <Badge
+                                    variant="secondary"
+                                    className="ml-2 bg-violet-900 text-white dark:bg-violet-950"
+                                >
+                                    <BadgeCheckIcon />
+                                    <Link href={'/subscription'}>{capitalize(plan ?? 'free')}</Link>
+                                </Badge>
+                            )}
+                        </div>
+
                         <p className="text-muted-foreground text-sm">
                             {user.emailAddresses[0].emailAddress}
                         </p>

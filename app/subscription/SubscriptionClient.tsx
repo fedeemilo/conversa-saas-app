@@ -1,30 +1,32 @@
 'use client'
 
-import { plans } from '@/constants'
+import { PLANS, plans } from '@/constants'
 import { useUpgradePlan } from '@/hooks/useUpgradePlan'
 import { useSearchParams } from 'next/navigation'
+import { useRedirectWithLoader } from '@/hooks/useRedirectWithLoader'
+import { Loader2Icon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
+import { useEffect } from 'react'
 
-type Props = {
+type SubscriptionClientProps = {
     plan: string | null
 }
 
-const SubscriptionClient = ({ plan }: Props) => {
+const SubscriptionClient = ({ plan }: SubscriptionClientProps) => {
     const { upgrade, isPending } = useUpgradePlan()
-    const isPro = plan === 'pro'
-
+    const { loading, setLoading } = useRedirectWithLoader()
     const searchParams = useSearchParams()
     const status = searchParams.get('status')
 
+    useEffect(() => {
+        if (status === 'approved') {
+            toast.success('¡Pago aprobado! 🎉')
+        }
+    }, [status])
+
     return (
         <main className="min-h-screen bg-orange-50 px-4 py-16">
-            {status === 'approved' && <p className="text-green-600">¡Pago aprobado! 🎉</p>}
-            {status === 'pending' && (
-                <p className="text-yellow-600">Pago pendiente de aprobación...</p>
-            )}
-            {status === 'failure' && (
-                <p className="text-red-600">El pago falló. Intentá de nuevo.</p>
-            )}
-
             <div className="mb-12 text-center">
                 <h1 className="text-4xl font-bold text-violet-900">Elegí tu plan</h1>
                 <p className="mt-2 text-gray-600">Comenzá gratis y mejorá cuando quieras</p>
@@ -33,6 +35,7 @@ const SubscriptionClient = ({ plan }: Props) => {
             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
                 {plans.map((p, idx) => {
                     const isCurrent = p.id === plan
+                    const isPro = plan === PLANS.PRO
 
                     return (
                         <div
@@ -60,7 +63,7 @@ const SubscriptionClient = ({ plan }: Props) => {
                                 </ul>
                             </div>
 
-                            <button
+                            <Button
                                 disabled={isCurrent || (isPro && isPending)}
                                 className={`w-full cursor-pointer rounded-md py-3 font-semibold text-white transition ${
                                     isCurrent
@@ -69,10 +72,24 @@ const SubscriptionClient = ({ plan }: Props) => {
                                           ? 'bg-yellow-400 hover:bg-yellow-500'
                                           : 'bg-violet-900 hover:bg-violet-950'
                                 }`}
-                                onClick={upgrade}
+                                onClick={() => {
+                                    setLoading(true)
+                                    upgrade({ setLoading, targetPlan: p.id })
+                                }}
                             >
-                                {isCurrent ? 'Tu plan actual' : p.cta}
-                            </button>
+                                {loading && !isCurrent ? (
+                                    <>
+                                        <Loader2Icon className="mr-2 h-8 w-8 animate-spin" />
+                                        {p.id === 'free' ? 'Volver al plan gratis' : p.cta}
+                                    </>
+                                ) : isCurrent ? (
+                                    'Tu plan actual'
+                                ) : p.id === 'free' ? (
+                                    'Volver al plan gratis'
+                                ) : (
+                                    p.cta
+                                )}
+                            </Button>
                         </div>
                     )
                 })}

@@ -1,64 +1,76 @@
-'use server'
-
 import { auth } from '@clerk/nextjs/server'
-import { createSupabaseClient } from '@/lib/supabase'
-import { PLANS } from '@/constants'
+import mercadopago from 'mercadopago'
 
-export const createDefaultSubscription = async () => {
+mercadopago.configure({
+    access_token: process.env.MP_ACCESS_TOKEN!
+})
+
+export const getUserPlan = async (): Promise<string | null> => {
     const { userId } = await auth()
     if (!userId) return null
 
-    console.log({ userId })
-
-    const supabase = createSupabaseClient()
-
-    // Verificamos si ya tiene una suscripción
-    const { data: existing, error: checkError } = await supabase
-        .from('subscriptions')
-        .select('*')
-        .eq('user_id', userId)
-        .single()
-
-    if (checkError && checkError.code !== 'PGRST116') {
-        throw new Error(checkError.message)
-    }
-
-    if (existing) {
-        return existing
-    }
-
-    // Crear una nueva suscripción en plan gratuito
-    const { data, error } = await supabase
-        .from('subscriptions')
-        .insert({
-            user_id: userId,
-            plan: PLANS.FREE,
-            status: 'active'
+    try {
+        // 1. Obtenemos el email de Clerk
+        const clerkRes = await fetch(`https://api.clerk.com/v1/users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${process.env.CLERK_SECRET_KEY!}`
+            }
         })
-        .select()
-        .single()
 
-    if (error) throw new Error(error.message)
+        if (!clerkRes.ok) {
+            console.error('❌ No se pudo obtener email de Clerk')
+            return null
+        }
 
-    return data
-}
+        const clerkUser = await clerkRes.json()
+        const payerEmail = clerkUser.email_addresses?.[0]?.email_address
 
-export const getUserPlan = async () => {
-    const { userId } = await auth()
-    if (!userId) return null
+        if (!payerEmail) {
+            console.error('❌ Email no disponible')
+            return null
+        }
 
-    const supabase = createSupabaseClient()
+        // 2. Buscamos preapprovals activos en MP
+        const response = await fetch(
+            `https://api.mercadopago.com/preapproval/search?payer_email=${payerEmail}&status=authorized`,
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN!}`
+                }
+            }
+        )
 
-    const { data, error } = await supabase
-        .from('subscriptions')
-        .select('plan')
-        .eq('user_id', userId)
-        .single()
+        const json = await response.json()
+        const subscriptions = json.results || []
 
-    if (error) {
-        console.error('Failed to fetch user plan:', error.message)
+        // ⚠️ Filtramos solo los realmente activos
+        const active = subscriptions.filter((sub: any) => {
+            return (
+                sub.status === 'authorized' &&
+                sub.auto_recurring?.transaction_amount > 0 &&
+                sub.summarized?.pending_charge_quantity > 0
+            )
+        })
+
+        if (!active.length) return 'free'
+
+        // Ordenamos por fecha de creación
+        const mostRecent = active.sort(
+            (a: any, b: any) =>
+                new Date(b.date_created).getTime() - new Date(a.date_created).getTime()
+        )[0]
+
+        let plan = 'free'
+        try {
+            const ref = JSON.parse(mostRecent.external_reference)
+            plan = ref.planName?.toLowerCase?.() || 'free'
+        } catch (err: any) {
+            console.warn('⚠️ No se pudo parsear external_reference:', err.message)
+        }
+
+        return plan
+    } catch (err: any) {
+        console.error('❌ Error al obtener plan del usuario:', err.message)
         return null
     }
-
-    return data?.plan || null
 }

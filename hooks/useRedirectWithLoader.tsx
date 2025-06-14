@@ -14,6 +14,7 @@ export const useRedirectWithLoader = () => {
 
     return {
         loading,
-        handleRedirect
+        handleRedirect,
+        setLoading
     }
 }
