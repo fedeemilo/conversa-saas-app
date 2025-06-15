@@ -1,4 +1,4 @@
-import { getCompanion } from '@/lib/actions/companion.actions'
+import { getCompanion, newSessionPermissions } from '@/lib/actions/companion.actions'
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { getSubjectColor } from '@/lib/utils'
@@ -7,6 +7,7 @@ import { Suspense } from 'react'
 import CompanionSessionSkeleton from '@/components/CompanionSessionSkeleton'
 import CompanionClientWrapper from '@/components/CompanionClientWrapper'
 import es from '@/messages/es.json'
+import UpgradeRequired from '@/components/UpgradeRequired'
 
 interface CompanionSessionPageProps {
     params: Promise<{ id: string; locale: string }>
@@ -15,14 +16,25 @@ interface CompanionSessionPageProps {
 const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
     const { id } = await params
 
-    const companion = await getCompanion(id)
-    const user = await currentUser()
+    const [companion, user, canSession] = await Promise.all([
+        getCompanion(id),
+        currentUser(),
+        newSessionPermissions()
+    ])
 
     const t = es['companion-session']
     const tCompanion = es['companion-component']
 
     if (!user) redirect('/sign-in')
     if (!companion) redirect('/companions')
+
+    if (!canSession) {
+        return (
+            <main className="mt-16">
+                <UpgradeRequired />
+            </main>
+        )
+    }
 
     const { subject, name, topic, duration } = companion
 

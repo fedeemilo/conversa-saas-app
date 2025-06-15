@@ -1,9 +1,8 @@
 'use client'
 
 import CompanionForm from '@/components/CompanionForm'
-import Image from 'next/image'
-import Link from 'next/link'
 import es from '@/messages/es.json'
+import UpgradeRequired from '@/components/UpgradeRequired'
 
 const NewCompanionClient = ({ canCreate }: { canCreate: boolean }) => {
     const t = es['companion-new']
@@ -17,24 +16,7 @@ const NewCompanionClient = ({ canCreate }: { canCreate: boolean }) => {
                     <CompanionForm />
                 </article>
             ) : (
-                <article className="companion-limit">
-                    <Image
-                        src="/images/limit.svg"
-                        alt="Companion limit reached"
-                        width={350}
-                        height={230}
-                    />
-                    <div className="cta-badge">{t.limit_badge}</div>
-                    <h1>{t.limit_title}</h1>
-                    <p>{t.limit_description}</p>
-                    <Link
-                        href="/subscription"
-                        className="btn-primary w-full justify-center"
-                        prefetch={true}
-                    >
-                        {t.limit_button}
-                    </Link>
-                </article>
+                <UpgradeRequired />
             )}
         </main>
     )

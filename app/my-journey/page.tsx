@@ -33,8 +33,6 @@ const Profile = async () => {
 
     const t = es['my-journey']
 
-    console.log({ plan })
-
     return (
         <main className="min-lg:w-3/4">
             <section className="flex items-center justify-between gap-4 max-sm:flex-col">

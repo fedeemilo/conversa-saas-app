@@ -8,6 +8,7 @@ import { Loader2Icon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { useEffect } from 'react'
+import ButtonWithLoading from '@/components/ButtonWithLoading'
 
 type SubscriptionClientProps = {
     plan: string | null
@@ -63,23 +64,24 @@ const SubscriptionClient = ({ plan }: SubscriptionClientProps) => {
                                 </ul>
                             </div>
 
-                            <Button
+                            <ButtonWithLoading
+                                redirectTo="/subscription"
                                 disabled={isCurrent || (isPro && isPending)}
-                                className={`w-full cursor-pointer rounded-md py-3 font-semibold text-white transition ${
+                                className={`transition ${
                                     isCurrent
                                         ? 'cursor-not-allowed bg-gray-300'
                                         : p.highlight
                                           ? 'bg-yellow-400 hover:bg-yellow-500'
                                           : 'bg-violet-900 hover:bg-violet-950'
                                 }`}
-                                onClick={() => {
+                                onClickExtra={() => {
                                     setLoading(true)
-                                    upgrade({ setLoading, targetPlan: p.id })
+                                    return upgrade({ setLoading, targetPlan: p.id })
                                 }}
                             >
                                 {loading && !isCurrent ? (
                                     <>
-                                        <Loader2Icon className="mr-2 h-8 w-8 animate-spin" />
+                                        <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
                                         {p.id === 'free' ? 'Volver al plan gratis' : p.cta}
                                     </>
                                 ) : isCurrent ? (
@@ -89,7 +91,7 @@ const SubscriptionClient = ({ plan }: SubscriptionClientProps) => {
                                 ) : (
                                     p.cta
                                 )}
-                            </Button>
+                            </ButtonWithLoading>
                         </div>
                     )
                 })}

@@ -4,8 +4,10 @@ import { auth } from '@clerk/nextjs/server'
 import { createSupabaseClient } from '@/lib/supabase'
 import { revalidatePath } from 'next/cache'
 import { getUserPlan } from '@/lib/actions/user.actions'
-import { PLANS } from '@/constants'
+import { startOfMonth, endOfMonth } from 'date-fns'
+import { COMPANION_LIMITS, PLANS } from '@/constants'
 
+// Companions
 export const createCompanion = async (formData: CreateCompanion) => {
     const { userId: author } = await auth()
     const supabase = createSupabaseClient()
@@ -79,6 +81,16 @@ export const getCompanion = async (id: string) => {
     return data[0]
 }
 
+export const getUserCompanions = async (userId: string) => {
+    const supabase = createSupabaseClient()
+    const { data, error } = await supabase.from('companions').select().eq('author', userId)
+
+    if (error) throw new Error(error.message)
+
+    return data
+}
+
+// Sessions
 export const addToSessionHistory = async (companionId: string) => {
     const { userId } = await auth()
     const supabase = createSupabaseClient()
@@ -119,15 +131,7 @@ export const getUserSessions = async (userId: string, limit = 10) => {
     return data.map(({ companions }) => companions)
 }
 
-export const getUserCompanions = async (userId: string) => {
-    const supabase = createSupabaseClient()
-    const { data, error } = await supabase.from('companions').select().eq('author', userId)
-
-    if (error) throw new Error(error.message)
-
-    return data
-}
-
+// Permissions
 export const newCompanionPermissions = async () => {
     const { userId } = await auth()
     const supabase = createSupabaseClient()
@@ -136,15 +140,8 @@ export const newCompanionPermissions = async () => {
 
     const plan = await getUserPlan()
 
-    let limit = 0
-
-    if (plan === PLANS.PRO) {
-        limit = 10
-    } else if (plan === PLANS.FREE) {
-        limit = 3
-    } else {
-        return false
-    }
+    const limit = COMPANION_LIMITS[plan ?? ''] ?? 0
+    if (limit === 0) return false
 
     const { count, error } = await supabase
         .from('companions')
@@ -154,6 +151,31 @@ export const newCompanionPermissions = async () => {
     if (error) throw new Error(error.message)
 
     return (count ?? 0) < limit
+}
+
+export const newSessionPermissions = async () => {
+    const { userId } = await auth()
+    if (!userId) throw new Error('No user ID found')
+
+    const plan = await getUserPlan()
+    if (plan === PLANS.PRO) return true
+
+    const supabase = createSupabaseClient()
+
+    const now = new Date()
+    const from = startOfMonth(now).toISOString()
+    const to = endOfMonth(now).toISOString()
+
+    const { count, error } = await supabase
+        .from('session_history')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', userId)
+        .gte('created_at', from)
+        .lte('created_at', to)
+
+    if (error) throw new Error(error.message)
+
+    return (count ?? 0) < 10
 }
 
 // Bookmarks
@@ -173,6 +195,7 @@ export const addBookmark = async (companionId: string, path: string) => {
     revalidatePath(path)
     return data
 }
+
 export const removeBookmark = async (companionId: string, path: string) => {
     const { userId } = await auth()
     if (!userId) return
@@ -191,6 +214,7 @@ export const removeBookmark = async (companionId: string, path: string) => {
     revalidatePath(path)
     return data
 }
+
 export const getBookmarkedCompanions = async (userId: string) => {
     const supabase = createSupabaseClient()
     const { data, error } = await supabase

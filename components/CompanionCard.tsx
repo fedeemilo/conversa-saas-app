@@ -4,10 +4,8 @@ import Image from 'next/image'
 import { useTranslatedSubject } from '@/lib/subject'
 import { removeBookmark, addBookmark } from '@/lib/actions/companion.actions'
 import { usePathname } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Loader2Icon } from 'lucide-react'
-import { useRedirectWithLoader } from '@/hooks/useRedirectWithLoader'
 import es from '@/messages/es.json'
+import ButtonWithLoading from '@/components/ButtonWithLoading'
 
 interface CompanionCardProps {
     id: string
@@ -32,7 +30,6 @@ const CompanionCard = ({
     const tSession = es['companion-session']
     const translateSubject = useTranslatedSubject()
     const pathname = usePathname()
-    const { loading, handleRedirect } = useRedirectWithLoader()
 
     const handleBookmark = async () => {
         if (bookmarked) {
@@ -70,19 +67,9 @@ const CompanionCard = ({
             </div>
 
             <div className="mt-auto pt-4">
-                <Button
-                    onClick={() => handleRedirect(`/companions/${id}`)}
-                    className="w-full cursor-pointer justify-center font-semibold transition"
-                >
-                    {loading ? (
-                        <>
-                            <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
-                            {tCard.launch}
-                        </>
-                    ) : (
-                        tCard.launch
-                    )}
-                </Button>
+                <ButtonWithLoading redirectTo={`/companions/${id}`}>
+                    {tCard.launch}
+                </ButtonWithLoading>
             </div>
         </article>
     )

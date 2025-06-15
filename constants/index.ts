@@ -23,7 +23,7 @@ export const plans: Plan[] = [
         id: 'free',
         name: 'Plan Básico',
         price: 'Gratis',
-        features: ['10 conversaciones por mes', '3 tutores activos', 'Resúmenes básicos de sesión'],
+        features: ['10 conversaciones por mes', '3 tutores activos', 'Transcripción en vivo'],
         cta: 'Empezar Gratis',
         highlight: false
     },
@@ -33,7 +33,7 @@ export const plans: Plan[] = [
         price: '$2900 ARS / mes',
         features: [
             'Conversaciones ilimitadas',
-            'Tutores ilimitados',
+            '10 tutores activos',
             'Historial de sesiones',
             'Resúmenes avanzados',
             'Reportes de progreso mensual'
@@ -47,3 +47,8 @@ export const PLANS = {
     FREE: 'free',
     PRO: 'pro'
 } as const
+
+export const COMPANION_LIMITS: Record<string, number> = {
+    [PLANS.FREE]: 3,
+    [PLANS.PRO]: 10
+}
