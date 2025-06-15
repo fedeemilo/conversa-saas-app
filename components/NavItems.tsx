@@ -29,7 +29,8 @@ const NavItems = ({ isMobile = false, onClickItem }: NavItemsProps) => {
                     onClick={onClickItem}
                     className={cn(
                         isMobile ? 'font-medium text-gray-800' : '',
-                        pathname === href && 'text-primary font-semibold'
+                        pathname === href && 'text-primary font-semibold',
+                        'font-semibold opacity-75 transition-opacity hover:opacity-100'
                     )}
                 >
                     {label}

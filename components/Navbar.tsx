@@ -7,6 +7,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { useState } from 'react'
 import HamburgerButton from '@/components/HamburgerButton'
 import es from '@/messages/es.json'
+import SignInLoadingButton from './SignInLoadingButton'
 
 const Navbar = () => {
     const t = es['navbar']
@@ -32,9 +33,7 @@ const Navbar = () => {
             <div className="hidden items-center gap-6 sm:flex">
                 <NavItems />
                 <SignedOut>
-                    <SignInButton>
-                        <button className="btn-signin">{t.signin}</button>
-                    </SignInButton>
+                    <SignInLoadingButton />
                 </SignedOut>
                 <SignedIn>
                     <UserButton />
@@ -62,9 +61,7 @@ const Navbar = () => {
                 <div className="flex flex-col gap-4 px-6 py-4">
                     <NavItems isMobile onClickItem={closeMenu} />
                     <SignedOut>
-                        <SignInButton>
-                            <button className="btn-signin w-full">{t.signin}</button>
-                        </SignInButton>
+                        <SignInLoadingButton />
                     </SignedOut>
                 </div>
             </div>

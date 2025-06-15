@@ -82,10 +82,7 @@ const Profile = async () => {
                         {t.bookmarked_companions} {`(${bookmarkedCompanions.length})`}
                     </AccordionTrigger>
                     <AccordionContent>
-                        <CompanionsList
-                            companions={bookmarkedCompanions}
-                            title={t.bookmarked_companions}
-                        />
+                        <CompanionsList companions={bookmarkedCompanions} />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="recent">
@@ -93,7 +90,7 @@ const Profile = async () => {
                         {t.recent_sessions}
                     </AccordionTrigger>
                     <AccordionContent>
-                        <CompanionsList title={t.recent_sessions} companions={sessionHistory} />
+                        <CompanionsList companions={sessionHistory} />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="companions">
@@ -101,7 +98,7 @@ const Profile = async () => {
                         {t.my_companions} {`(${companions.length})`}
                     </AccordionTrigger>
                     <AccordionContent>
-                        <CompanionsList title={t.my_companions} companions={companions} />
+                        <CompanionsList companions={companions} />
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

@@ -8,14 +8,14 @@ import {
     TableHeader,
     TableRow
 } from '@/components/ui/table'
-import { cn, getSubjectColor } from '@/lib/utils'
+import { cn, getSubjectColor, truncateText } from '@/lib/utils'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslatedSubject } from '@/lib/subject'
 import es from '@/messages/es.json'
 
 interface CompanionsListProps {
-    title: string
+    title?: string
     companions?: Companion[]
     classNames?: string
 }
@@ -55,7 +55,9 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <p className="text-2xl font-bold">{name}</p>
-                                            <p className="text-lg">{topic}</p>
+                                            <p className="truncate text-lg" title={topic}>
+                                                {truncateText(topic, 50)}
+                                            </p>
                                         </div>
                                     </div>
                                 </Link>
