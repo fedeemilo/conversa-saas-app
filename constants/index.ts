@@ -1,12 +1,12 @@
 export const subjects = ['maths', 'language', 'science', 'history', 'coding', 'economics']
 
 export const subjectsColors = {
-    science: '#E5D0FF',
-    maths: '#FFDA6E',
-    language: '#BDE7FF',
-    coding: '#FFC8E4',
-    history: '#FFECC8',
-    economics: '#C8FFDF'
+    science: '#D6F5E3', // Verde menta suave - moderno y fresco
+    maths: '#FFF3B0', // Amarillo pastel cálido - concentrado pero amigable
+    language: '#D0E1FF', // Celeste sereno - relajante, comunica claridad
+    coding: '#FBD0D9', // Rosa coralado - creativo, ideal para tech sin ser infantil
+    history: '#FAE6C8', // Crema cálido - tipo pergamino, muy temático
+    economics: '#D9F0FF' // Azul hielo con onda fintech moderna
 }
 
 interface Plan {
