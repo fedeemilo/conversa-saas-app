@@ -41,7 +41,7 @@ const CompanionCard = ({
 
     return (
         <article
-            className="companion-card flex flex-col justify-between rounded-xl p-4 shadow-sm transition-all duration-200 ease-in-out hover:scale-[1.01] hover:shadow-lg hover:brightness-[0.97] md:h-79"
+            className="companion-card flex flex-col justify-between rounded-xl p-4 shadow-sm transition-all duration-200 ease-in-out hover:shadow-lg hover:brightness-[0.97] md:h-79"
             style={{ backgroundColor: color }}
         >
             <div className="flex items-center justify-between">

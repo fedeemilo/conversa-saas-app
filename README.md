@@ -109,15 +109,13 @@
 - [x] Cambiar proveedor a Azure con voces `Neural` específicas.
 - [x] Implementar lógica dinámica de selección de voz según género/estilo/idioma.
 
-#### 💳 Integración con Stripe
-- [ ] Configurar Stripe en modo test (checkout básico).
-- [ ] Validar flujo de suscripción y generación de sesiones seguras.
-- [ ] Definir entorno de desarrollo vs. producción para pagos.
+#### 💳 Integración con MercadoPago
+- [x] Configurar MergadoPago en modo test (checkout básico).
+- [x] Definir entorno de desarrollo vs. producción para pagos.
 
 #### 🪙 Evaluación de planes de suscripción y features premium
-- [ ] Auditar los features actuales para determinar cuáles deben estar limitados por plan.
-- [ ] Diseñar al menos 2 niveles de suscripción (ej: Gratis y Pro).
-- [ ] Agregar validaciones en frontend/backend para restringir el acceso a funciones según plan.
+- [x] Auditar los features actuales para determinar cuáles deben estar limitados por plan.
+- [x] Diseñar al menos 2 niveles de suscripción (ej: Gratis y Pro).
 
 #### 💡 Nuevos features atractivos para el usuario
 - [ ] Analizar métricas y feedback para priorizar mejoras.

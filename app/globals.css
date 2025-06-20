@@ -9,6 +9,7 @@
     --cta: #2c2c2c;
     --cta-gold: #fccc41;
     --radius: 0.625rem;
+    --color-violet-accent: #4007a2;
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
@@ -182,7 +183,7 @@ body {
     }
 
     .companion-section {
-        @apply flex w-2/3 flex-col items-center justify-center gap-4 rounded-lg border-2 border-orange-500 max-sm:w-full;
+        @apply flex w-2/3 flex-col items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 max-sm:w-full;
     }
 
     .companion-avatar {

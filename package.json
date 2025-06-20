@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@clerk/localizations": "^3.16.5",
         "@clerk/nextjs": "^6.20.2",
         "@hookform/resolvers": "^5.0.1",
         "@jsmastery/utils": "^1.0.2",
