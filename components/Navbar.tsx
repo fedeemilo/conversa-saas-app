@@ -3,14 +3,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import NavItems from '@/components/NavItems'
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { useState } from 'react'
 import HamburgerButton from '@/components/HamburgerButton'
-import es from '@/messages/es.json'
 import SignInLoadingButton from './SignInLoadingButton'
 
 const Navbar = () => {
-	const t = es['navbar']
 	const [menuOpen, setMenuOpen] = useState(false)
 	const closeMenu = () => setMenuOpen(false)
 

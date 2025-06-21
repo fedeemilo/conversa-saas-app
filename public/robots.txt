@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /companions/
+
+# Host
+Host: https://eduvoice.ai
+
+# Sitemaps
+Sitemap: https://eduvoice.ai/sitemap.xml
