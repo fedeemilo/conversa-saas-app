@@ -11,7 +11,6 @@
 - **11labs** para síntesis de voz natural
 - **Clerk**: autenticación y gestión de usuarios
 - **Supabase**: base de datos y backend-as-a-service
-- **next-intl**: internacionalización i18n (en / es)
 - **Sentry**: monitoreo de errores y replays
 - **TailwindCSS + Radix UI**: estilado moderno y accesible
 - **Zod + React Hook Form** para validación de formularios
@@ -23,11 +22,15 @@
 - 📚 Creación de tutores con nombre, voz, estilo y asignatura personalizada
 - 🗣️ Interacción por voz en tiempo real
 - 🎧 Transcripción en vivo de la conversación
+- ✍️ Generación automática de resúmenes al finalizar cada sesión
+- 🧾 Descarga de resumen en pantalla con opción de copia
 - 🌐 Soporte multilenguaje (inglés y español) con detección automática
 - 🧠 IA ajustada al contexto (tema + estilo conversacional)
-- 🔒 Integración con Clerk para autenticación de usuarios
+- 🔒 Autenticación segura con Clerk
+- 📊 Sitemap generado automáticamente para mejor indexación en Google
+- 🖼️ Metadata y Open Graph configurados para mejorar el SEO y las vistas previas
+- 🧱 Arquitectura moderna: Next.js 14 App Router + Tailwind + Supabase + Vapi
 - 🐞 Monitoreo de errores y trazas con Sentry
-- 📦 Arquitectura moderna: Next.js + Tailwind + Supabase + Vapi
 
 ---
 
@@ -35,17 +38,37 @@
 
 ```
 /app
-   layout.tsx        ✅ Layout multilenguaje con NextIntlProvider y ClerkProvider
-   api/              ✅ Endpoints API (incluye integraciones Sentry)
-   companions/       ✅ Lógica de tutores y sesiones
-   sign-in/          ✅ Autenticación con Clerk
+  layout.tsx           ✅ Layout multilenguaje con NextIntlProvider y ClerkProvider
+  api/                 ✅ Endpoints API (incluye integraciones con Sentry y Vapi)
+  companions/          ✅ Lógica de tutores y sesiones (crear, listar, interactuar)
+  sign-in/             ✅ Autenticación con Clerk
+  subscription/        ✅ Página de planes (Free/Pro) e integración con Mercado Pago
+  my-journey/          ✅ Historial de sesiones y resúmenes generados por usuario
+
 /components
-  ui/                 ✅ Componentes reutilizables (Select, Input, etc.)
+  ui/                  ✅ Componentes reutilizables (Select, Input, etc.)
   CompanionComponent.tsx
-  CompanionForm.tsx   ✅ Crear un nuevo tutor con nombre, estilo, voz, tema
-/constants            ✅ Paletas, sonidos, IDs de voces, textos
-/i18n                 ✅ Traducciones y routing local
-/hooks                ✅ Custom hooks
+  CompanionForm.tsx    ✅ Crear un nuevo tutor con nombre, estilo, voz, tema
+  SessionLimit.tsx     ✅ Aviso de límite de sesiones para usuarios Free
+  SummaryBlock.tsx     ✅ Vista del resumen generado + botón de copia
+
+/constants             ✅ Paletas, sonidos, IDs de voces, textos predefinidos
+/i18n                  ✅ Traducciones, idiomas disponibles y helpers de NextIntl
+/hooks                 ✅ Custom hooks (uso de voz, scroll, datos de sesión)
+
+/lib
+  actions/             ✅ Server actions para companions, subs, user y conversaciones
+  assistant.server.ts  ✅ Lógica principal de conversación con la IA
+  assistant-utils.ts   ✅ Helpers para armar el prompt y manejar el contexto
+  openai.ts            ✅ Cliente y config para OpenAI (funciones y llamadas)
+  supabase.ts          ✅ Instancia del cliente Supabase
+  vapi.sdk.ts          ✅ Configuración y helpers para uso de Vapi
+  utils.ts             ✅ Funciones genéricas reutilizables
+
+/messages              ✅ Archivos de traducción por idioma
+/public                ✅ Archivos estáticos: favicon, manifest, og-image
+/types                 ✅ Tipados globales para la app (User, Companion, etc.)
+
 ```
 
 ---
@@ -93,6 +116,11 @@
 - Primera versión funcional desplegada.
 - Interacción por voz con IA operativa en español e inglés.
 - Sistema de tutores personalizables según voz, tema y estilo.
+- Transcripción y resumen de sesiones disponibles.
+- Sistema de suscripción Free/Pro con integración a Mercado Pago.
+- Panel de historial (`/my-journey`) con acceso a resúmenes pasados.
+
+---
 
 ### 🔧 Mejoras planificadas
 
@@ -102,43 +130,55 @@
 - [x] Cambiar proveedor a Azure con voces `Neural` específicas.
 - [x] Implementar lógica dinámica de selección de voz según género/estilo/idioma.
 
-#### 💳 Integración con MercadoPago
+#### 💳 Integración con Mercado Pago
 
-- [x] Configurar MergadoPago en modo test (checkout básico).
-- [x] Definir entorno de desarrollo vs. producción para pagos.
+- [x] Configurar MercadoPago en modo producción (Checkout Pro).
+- [x] Implementar webhook para actualización automática de suscripciones.
+- [x] Mostrar botones de suscripción habilitados según plan actual del usuario.
 
-#### 🪙 Evaluación de planes de suscripción y features premium
+#### 📦 Fortalecimiento del sistema de suscripciones
 
-- [x] Auditar los features actuales para determinar cuáles deben estar limitados por plan.
-- [x] Diseñar al menos 2 niveles de suscripción (ej: Gratis y Pro).
+- [x] Límite de resúmenes en plan Free (10).
+- [x] Límite de sesiones activas para plan Free.
+- [x] Página de upgrade con lógica condicional según plan.
+- [ ] Notificaciones en la UI al alcanzar límites del plan.
 
-#### 💡 Nuevos features atractivos para el usuario
+#### 🧠 Nuevas funcionalidades inteligentes
 
-- [ ] Analizar métricas y feedback para priorizar mejoras.
-- [ ] Sugerencias iniciales:
-    - Personalización de voz (tono, velocidad).
-    - Tutor especializado por materia.
-    - Guardado de sesiones y transcripciones.
-    - Recomendaciones inteligentes post-sesión.
+- [x] Generación automática de resumen al finalizar la sesión.
+- [x] Guardado de resumen y transcripción en base de datos.
+- [ ] Descarga de sesión en formato PDF / MP3 (Pro).
+- [ ] Recomendaciones inteligentes post-sesión (materia relacionada, práctica, etc).
+- [ ] Continuidad entre sesiones (memoria de conversación por tutor).
 
-#### 🐞 Corrección de errores visuales y experiencia mobile
+#### 📱 UX/UI y experiencia mobile
 
-- [ ] Revisar fallos de visualización en dispositivos móviles.
-- [ ] Implementar menú hamburguesa en navbar para pantallas pequeñas.
-- [ ] Asegurar comportamiento responsive en todas las páginas.
+- [x] Menú hamburguesa responsive en dispositivos móviles.
+- [ ] Mejorar diseño en `/sign-in` y `/subscription` en pantallas pequeñas.
+- [ ] Mejoras visuales en componentes de voz, loading y resumen.
 
----
+#### 🧪 SEO, performance y visibilidad
 
----
+- [x] Sitemap generado y enviado a Google Search Console.
+- [x] Verificación de dominio.
+- [x] Ajuste de etiquetas meta y OG en más páginas internas.
+- [ ] Inclusión de rich snippets (si aplica) para mejorar visibilidad.
 
-## 📂 Scripts disponibles
+### 🐞 Bugs a revisar
 
-```bash
-npm run dev        # Inicia Next.js con turbopack
-npm run build      # Build de producción
-npm run start      # Server de producción
-npm run lint       # Linter
-```
+#### 📱 Comportamiento del menú hamburguesa en mobile
+
+- [ ] El menú no se cierra automáticamente al hacer click fuera del área visible.
+- [ ] El menú no se cierra al seleccionar una opción del menú que redirige a otra ruta.
+- [ ] A veces el ícono no cambia correctamente de hamburger (`☰`) a ícono de cierre (`✖`).
+- [ ] Evaluar usar `Dialog` o `Sheet` para mejor accesibilidad y control del foco en mobile.
+
+#### 🎨 Mejoras visuales en pantallas pequeñas
+
+- [ ] Aumentar el padding lateral para evitar que los contenidos queden muy pegados al borde.
+- [ ] Revisión general de espaciados, tamaños de fuente y botones en dispositivos móviles.
+- [ ] Asegurar coherencia visual entre modo claro/oscuro en componentes como navbar, cards y formularios.
+
 
 ---
 
