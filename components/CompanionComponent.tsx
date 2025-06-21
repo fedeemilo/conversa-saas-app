@@ -7,6 +7,7 @@ import soundwaves from '@/constants/soundwaves.json'
 import { CallStatus, useCompanion } from '@/hooks/useCompanion'
 import { Copy, Check } from 'lucide-react'
 import ButtonWithLoading from '@/components/ButtonWithLoading'
+import { SUMMARY_LIMITS } from '@/constants'
 
 const CompanionComponent = ({
 	companionId,
@@ -32,7 +33,9 @@ const CompanionComponent = ({
 		userPlan,
 		handleGenerate,
 		copied,
-		setCopied
+		setCopied,
+		summaryCount,
+		userDataLoaded
 	} = useCompanion({
 		companionId,
 		subject,
@@ -151,16 +154,26 @@ const CompanionComponent = ({
 					})}
 				</div>
 
-				{callStatus === CallStatus.FINISHED && (
+				{callStatus === CallStatus.FINISHED && userDataLoaded && (
 					<div className='mt-4 text-center'>
-						<ButtonWithLoading
-							redirectTo=''
-							disabled={loadingSummary}
-							onClickExtra={handleGenerate}
-							className='w-fit mx-auto'
-						>
-							{loadingSummary ? 'Generando...' : 'Generar resumen'}
-						</ButtonWithLoading>
+						{userPlan === 'free' && summaryCount >= SUMMARY_LIMITS.free ? (
+							<div className='flex flex-col items-center gap-2'>
+								<p className='text-sm text-muted-foreground'>
+									Ya alcanzaste el límite de 10 resúmenes gratuitos.
+								</p>
+								<ButtonWithLoading redirectTo='/subscriptions'>
+									Mejorar mi Plan
+								</ButtonWithLoading>
+							</div>
+						) : (
+							<ButtonWithLoading
+								redirectTo=''
+								onClickExtra={handleGenerate}
+								disabled={loadingSummary}
+							>
+								{loadingSummary ? 'Generando...' : 'Generar resumen'}
+							</ButtonWithLoading>
+						)}
 					</div>
 				)}
 

@@ -42,10 +42,12 @@ export function useCompanion({
 	const [messages, setMessages] = useState<SavedMessage[]>([])
 
 	const [summary, setSummary] = useState<string | null>(null)
+	const [summaryCount, setSummaryCount] = useState<number>(0)
 	const [loadingSummary, setLoadingSummary] = useState(false)
 	const [userPlan, setUserPlan] = useState<PlanName>(null)
 	const [conversationId, setConversationId] = useState<string | null>(null)
 	const [copied, setCopied] = useState(false)
+	const [userDataLoaded, setUserDataLoaded] = useState(false)
 
 	const lottieRef = useRef<LottieRefCurrentProps>(null)
 	const messagesRef = useRef<SavedMessage[]>([])
@@ -116,26 +118,28 @@ export function useCompanion({
 	}, [])
 
 	useEffect(() => {
-		const checkPlan = async () => {
+		const checkData = async () => {
 			if (callStatus !== CallStatus.FINISHED) return
 
 			try {
-				const [{ data: planData }, convRes] = await Promise.all([
-					axios.get('/api/user/plan'),
-					axios.get('/api/conversations/latest').catch((err) => {
-						if (err.response?.status === 404) return { data: null }
-						throw err
-					})
-				])
+				const [{ data: planData }, { data: convData }, { data: summaryCountData }] =
+					await Promise.all([
+						axios.get('/api/user/plan'),
+						axios.get('/api/conversations/latest'),
+						axios.get('/api/conversations/summary-count')
+					])
 
 				setUserPlan(planData.plan)
-				if (convRes.data) setConversationId(convRes.data.id)
+				setConversationId(convData?.id || null)
+				setSummaryCount(summaryCountData.count || 0)
+				setUserDataLoaded(true)
 			} catch (err) {
-				console.error('Error al obtener plan o conversación más reciente', err)
+				console.error('Error obteniendo datos del usuario', err)
+				Sentry.captureException(err)
 			}
 		}
 
-		checkPlan()
+		checkData()
 	}, [callStatus])
 
 	const toggleMicrophone = () => {
@@ -207,6 +211,8 @@ export function useCompanion({
 		setLoadingSummary,
 		handleGenerate,
 		copied,
-		setCopied
+		setCopied,
+		summaryCount,
+		userDataLoaded
 	}
 }

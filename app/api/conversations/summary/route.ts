@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 	const summary = await generateSummary(transcript)
 	const latest = await getLatestConversation()
 
-	await updateConversationSummary(latest.id, summary)
+	await updateConversationSummary(latest?.id, summary)
 
 	return NextResponse.json({ summary })
 }

@@ -42,6 +42,8 @@ export const generateSummary = async (transcript: string): Promise<string> => {
 export const updateConversationSummary = async (conversationId: string, summary: string) => {
 	const supabase = createSupabaseClient()
 
+	if (!conversationId) throw new Error('Conversation ID is required')
+
 	const { error } = await supabase
 		.from('conversations')
 		.update({ summary })
@@ -65,4 +67,18 @@ export const getLatestConversation = async () => {
 	if (!data || data.length === 0) return null
 
 	return data[0]
+}
+
+export const getUserSummaryCount = async () => {
+	const { userId } = await auth()
+	const supabase = createSupabaseClient()
+
+	const { count, error } = await supabase
+		.from('conversations')
+		.select('*', { count: 'exact', head: true })
+		.eq('user_id', userId)
+		.not('summary', 'is', null)
+
+	if (error) throw new Error(error.message)
+	return count
 }

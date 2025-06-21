@@ -58,3 +58,8 @@ export const COMPANION_LIMITS: Record<string, number> = {
 	[PLANS.FREE]: 3,
 	[PLANS.PRO]: 10
 }
+
+export const SUMMARY_LIMITS: Record<string, number> = {
+	[PLANS.FREE]: 10,
+	[PLANS.PRO]: Infinity
+}
