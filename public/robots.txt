@@ -1,7 +1,6 @@
 # *
 User-agent: *
 Allow: /
-Disallow: /companions/
 
 # Host
 Host: https://eduvoice.ai
