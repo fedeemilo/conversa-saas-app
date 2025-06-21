@@ -1,93 +1,93 @@
 {
-    "companion-card": {
-        "launch": "Launch Lesson"
-    },
-    "companion-component": {
-        "connecting": "Connecting...",
-        "turn_on_microphone": "Turn on microphone",
-        "turn_off_microphone": "Turn off microphone",
-        "start_session": "Start Session",
-        "end_session": "End Session"
-    },
-    "companions-library": {
-        "title": "Companion Library"
-    },
-    "companions-list": {
-        "title": "Recently completed lessons",
-        "lessons": "Lessons",
-        "subject": "Subject",
-        "duration": "Duration",
-        "mins": "mins"
-    },
-    "companion-new": {
-        "title": "Companion Builder",
-        "description": "Customize your companion with a unique name, subject, voice, and style.",
-        "limit_title": "You’ve reached your limit",
-        "limit_description": "You’ve reached your companion limit. Upgrade to create more companions and premium features.",
-        "limit_badge": "Upgrade your plan",
-        "limit_button": "Upgrade My Plan"
-    },
-    "companion-session": {
-        "minutes": "minutes"
-    },
-    "cta": {
-        "badge": "Start learning your way.",
-        "title": "Build a Personalize Learning Companion",
-        "description": "Pick a name, subject, voice, & personality — and start learning through voice conversations that feel natural and fun.",
-        "button": "Build a New Companion"
-    },
-    "form": {
-        "name": "Companion Name",
-        "name_placeholder": "Enter the companion name",
-        "subject": "Subject",
-        "subject_placeholder": "Select the subject",
-        "topic": "What should the companion help with?",
-        "topic_placeholder": "Ex. Derivatives & Integrals",
-        "voice": "Voice",
-        "voice_placeholder": "Select the voice",
-        "voice_male": "Male",
-        "voice_female": "Female",
-        "style": "Style",
-        "style_placeholder": "Select the style",
-        "duration": "Estimated session duration in minutes",
-        "submit": "Build Your Companion"
-    },
-    "home": {
-        "popular": "Popular Companions",
-        "recent": "Recently completed sessions"
-    },
-    "my-journey": {
-        "lessons_completed": "Lessons completed",
-        "companions_created": "Companions created",
-        "recent_sessions": "Recent Sessions",
-        "my_companions": "My Companions",
-        "bookmarked_companions": "Bookmarked Companions"
-    },
-    "navbar": {
-        "home": "Home",
-        "companions": "Companions",
-        "journey": "My Journey",
-        "signin": "Sign In"
-    },
-    "search": {
-        "placeholder": "Search companions..."
-    },
-    "subject-filter": {
-        "placeholder": "Subject",
-        "all": "All subjects"
-    },
-    "subjects": {
-        "science": "Science",
-        "maths": "Maths",
-        "language": "Language",
-        "history": "History",
-        "coding": "Coding",
-        "economics": "Economics"
-    },
-    "vapi": {
-        "name": "Companion",
-        "firstMessage": "Hello, let's start the session. Today we'll be talking about {{topic}}.",
-        "systemPrompt": "You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.\n\nTutor Guidelines:\n- Stick to the topic: {{ topic }} and subject: {{ subject }}.\n- Speak naturally and clearly.\n- Break the topic down into smaller parts.\n- Keep your responses short and natural.\n- Use a {{ style }} tone of conversation.\n- Do not include special characters in your answers – this is a voice conversation.\n- If the student says 'Stop', stop speaking immediately and wait until the student speaks again before continuing.",
-        "userPrompt": "Talk to me like we're having a natural conversation. Speak clearly in English, using everyday language."
-    }
+	"companion-card": {
+		"launch": "Launch Lesson"
+	},
+	"companion-component": {
+		"connecting": "Connecting...",
+		"turn_on_microphone": "Turn on microphone",
+		"turn_off_microphone": "Turn off microphone",
+		"start_session": "Start Session",
+		"end_session": "End Session"
+	},
+	"companions-library": {
+		"title": "Companion Library"
+	},
+	"companions-list": {
+		"title": "Recently completed lessons",
+		"lessons": "Lessons",
+		"subject": "Subject",
+		"duration": "Duration",
+		"mins": "mins"
+	},
+	"companion-new": {
+		"title": "Companion Builder",
+		"description": "Customize your companion with a unique name, subject, voice, and style.",
+		"limit_title": "You’ve reached your limit",
+		"limit_description": "You’ve reached your companion limit. Upgrade to create more companions and premium features.",
+		"limit_badge": "Upgrade your plan",
+		"limit_button": "Upgrade My Plan"
+	},
+	"companion-session": {
+		"minutes": "minutes"
+	},
+	"cta": {
+		"badge": "Start learning your way.",
+		"title": "Build a Personalize Learning Companion",
+		"description": "Pick a name, subject, voice, & personality — and start learning through voice conversations that feel natural and fun.",
+		"button": "Build a New Companion"
+	},
+	"form": {
+		"name": "Companion Name",
+		"name_placeholder": "Enter the companion name",
+		"subject": "Subject",
+		"subject_placeholder": "Select the subject",
+		"topic": "What should the companion help with?",
+		"topic_placeholder": "Ex. Derivatives & Integrals",
+		"voice": "Voice",
+		"voice_placeholder": "Select the voice",
+		"voice_male": "Male",
+		"voice_female": "Female",
+		"style": "Style",
+		"style_placeholder": "Select the style",
+		"duration": "Estimated session duration in minutes",
+		"submit": "Build Your Companion"
+	},
+	"home": {
+		"popular": "Popular Companions",
+		"recent": "Recently completed sessions"
+	},
+	"my-journey": {
+		"lessons_completed": "Lessons completed",
+		"companions_created": "Companions created",
+		"recent_sessions": "Recent Sessions",
+		"my_companions": "My Companions",
+		"bookmarked_companions": "Bookmarked Companions"
+	},
+	"navbar": {
+		"home": "Home",
+		"companions": "Companions",
+		"journey": "My Journey",
+		"signin": "Sign In"
+	},
+	"search": {
+		"placeholder": "Search companions..."
+	},
+	"subject-filter": {
+		"placeholder": "Subject",
+		"all": "All subjects"
+	},
+	"subjects": {
+		"science": "Science",
+		"maths": "Maths",
+		"language": "Language",
+		"history": "History",
+		"coding": "Coding",
+		"economics": "Economics"
+	},
+	"vapi": {
+		"name": "Companion",
+		"firstMessage": "Hello, let's start the session. Today we'll be talking about {{topic}}.",
+		"systemPrompt": "You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.\n\nTutor Guidelines:\n- Stick to the topic: {{ topic }} and subject: {{ subject }}.\n- Speak naturally and clearly.\n- Break the topic down into smaller parts.\n- Keep your responses short and natural.\n- Use a {{ style }} tone of conversation.\n- Do not include special characters in your answers – this is a voice conversation.\n- If the student says 'Stop', stop speaking immediately and wait until the student speaks again before continuing.",
+		"userPrompt": "Talk to me like we're having a natural conversation. Speak clearly in English, using everyday language."
+	}
 }

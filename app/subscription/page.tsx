@@ -4,12 +4,12 @@ import { getUserPlan } from '@/lib/actions/user.actions'
 import SubscriptionClient from './SubscriptionClient'
 
 const SubscriptionPage = async () => {
-    const { userId } = await auth()
-    if (!userId) redirect('/sign-in')
+	const { userId } = await auth()
+	if (!userId) redirect('/sign-in')
 
-    const plan = await getUserPlan()
+	const plan = await getUserPlan()
 
-    return <SubscriptionClient plan={plan} />
+	return <SubscriptionClient plan={plan} />
 }
 
 export default SubscriptionPage

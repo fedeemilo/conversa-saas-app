@@ -6,34 +6,34 @@ import SubjectFilter from '@/components/SubjectFilter'
 import es from '@/messages/es.json'
 
 const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
-    const filters = await searchParams
-    const subject = filters.subject ?? ''
-    const topic = filters.topic ?? ''
+	const filters = await searchParams
+	const subject = filters.subject ?? ''
+	const topic = filters.topic ?? ''
 
-    const t = es['companions-library']
+	const t = es['companions-library']
 
-    const companions = await getAllCompanions({ subject, topic })
+	const companions = await getAllCompanions({ subject, topic })
 
-    return (
-        <main>
-            <section className="flex justify-between gap-4 max-sm:flex-col">
-                <h1>{t.title}</h1>
-                <div className="flex gap-4">
-                    <SearchInput />
-                    <SubjectFilter />
-                </div>
-            </section>
+	return (
+		<main>
+			<section className='flex justify-between gap-4 max-sm:flex-col'>
+				<h1>{t.title}</h1>
+				<div className='flex gap-4'>
+					<SearchInput />
+					<SubjectFilter />
+				</div>
+			</section>
 
-            <section className="companions-grid">
-                {companions.map((companion) => (
-                    <CompanionCard
-                        key={companion.id}
-                        {...companion}
-                        color={getSubjectColor(companion.subject)}
-                    />
-                ))}
-            </section>
-        </main>
-    )
+			<section className='companions-grid'>
+				{companions.map((companion) => (
+					<CompanionCard
+						key={companion.id}
+						{...companion}
+						color={getSubjectColor(companion.subject)}
+					/>
+				))}
+			</section>
+		</main>
+	)
 }
 export default CompanionsLibrary

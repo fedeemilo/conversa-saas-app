@@ -5,15 +5,15 @@ import { Suspense } from 'react'
 import CompanionSessionSkeleton from './CompanionSessionSkeleton'
 
 const CompanionComponent = dynamic(() => import('./CompanionComponent'), {
-    ssr: false
+	ssr: false
 })
 
 const CompanionClientWrapper = (props: CompanionComponentProps) => {
-    return (
-        <Suspense fallback={<CompanionSessionSkeleton />}>
-            <CompanionComponent {...props} />
-        </Suspense>
-    )
+	return (
+		<Suspense fallback={<CompanionSessionSkeleton />}>
+			<CompanionComponent {...props} />
+		</Suspense>
+	)
 }
 
 export default CompanionClientWrapper

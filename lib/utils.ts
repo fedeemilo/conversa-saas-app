@@ -3,20 +3,28 @@ import { twMerge } from 'tailwind-merge'
 import { subjectsColors } from '@/constants'
 
 export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
+	return twMerge(clsx(inputs))
 }
 
 export const getSubjectColor = (subject: string) => {
-    return subjectsColors[subject as keyof typeof subjectsColors]
+	return subjectsColors[subject as keyof typeof subjectsColors]
 }
 
 export const capitalize = (str: string | null) => {
-    if (!str) return null
+	if (!str) return null
 
-    return str.charAt(0).toUpperCase() + str.slice(1)
+	return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 export function truncateText(text: string, maxLength: number): string {
-    if (text.length <= maxLength) return text
-    return text.slice(0, maxLength).trimEnd() + '...'
+	if (text.length <= maxLength) return text
+	return text.slice(0, maxLength).trimEnd() + '...'
+}
+
+export const shuffleString = (str: string): string => {
+	const arr = str.split('')
+
+	arr.sort(() => 0.5 - Math.random())
+
+	return arr.join('')
 }
