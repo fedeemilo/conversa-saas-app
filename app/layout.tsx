@@ -53,6 +53,20 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 	return (
 		<ClerkProvider appearance={{ variables: { colorPrimary: '#4007a2' } }} localization={esES}>
 			<html lang='es'>
+				<head>
+					<script
+						type='application/ld+json'
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify({
+								'@context': 'https://schema.org',
+								'@type': 'Organization',
+								name: 'EduVoice',
+								url: 'https://eduvoice.ai',
+								logo: 'https://eduvoice.ai/icons/icon-192x192.png'
+							})
+						}}
+					/>
+				</head>
 				<body className={`${bricolage.variable} antialiased`}>
 					<Navbar />
 					{children}

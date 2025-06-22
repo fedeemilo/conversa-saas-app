@@ -1,12 +1,29 @@
-export const subjects = ['maths', 'language', 'science', 'history', 'coding', 'economics']
+export const subjects = [
+	'maths',
+	'language',
+	'science',
+	'history',
+	'coding',
+	'economics',
+	'art',
+	'electronics',
+	'health',
+	'geography',
+	'philosophy'
+]
 
 export const subjectsColors = {
-	science: '#D6F5E3',
-	maths: '#FFF3B0',
-	language: '#D0E1FF',
-	coding: '#FBD0D9',
-	history: '#FAE6C8',
-	economics: '#D9F0FF'
+	science: '#00DFA2', // Verde turquesa brillante - vida, ciencia
+	maths: '#FFD600', // Amarillo intenso - lógica, foco
+	language: '#3D8BFF', // Azul medio - comunicación, claridad
+	coding: '#FF3C78', // Rosa neón fuerte - energía, tech creativa
+	history: '#FF8A00', // Naranja vibrante - historia, épocas
+	economics: '#00C2FF', // Celeste puro - finanzas, datos
+	art: '#D94AFF', // Magenta fuerte - arte, expresión
+	electronics: '#1AC8FF', // Cian eléctrico - circuitos, tecnología
+	health: '#00C97B', // Verde médico saturado - salud, vitalidad
+	geography: '#FFA133', // Naranja cálido tierra - mapas, tierra
+	philosophy: '#A259FF' // Violeta intenso - introspección
 }
 
 interface Plan {

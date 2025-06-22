@@ -30,7 +30,7 @@
 		"limit_button": "Mejorar mi Plan"
 	},
 	"companion-session": {
-		"minutes": "minutos"
+		"minutes": "min"
 	},
 	"cta": {
 		"badge": "Empieza a aprender a tu manera.",
@@ -84,7 +84,12 @@
 		"language": "Lenguaje",
 		"history": "Historia",
 		"coding": "Programación",
-		"economics": "Economía"
+		"economics": "Economía",
+		"art": "Arte",
+		"electronics": "Electrónica",
+		"health": "Salud",
+		"geography": "Geografía",
+		"philosophy": "Filosofía"
 	},
 	"vapi": {
 		"name": "Tutor",
