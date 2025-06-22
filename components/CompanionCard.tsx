@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useTranslatedSubject } from '@/lib/subject'
+import { translateSubject } from '@/lib/subject'
 import { removeBookmark, addBookmark } from '@/lib/actions/companion.actions'
 import { usePathname } from 'next/navigation'
 import es from '@/messages/es.json'
@@ -28,7 +28,7 @@ const CompanionCard = ({
 }: CompanionCardProps) => {
 	const tCard = es['companion-card']
 	const tSession = es['companion-session']
-	const translateSubject = useTranslatedSubject()
+	const translatedSubject = translateSubject()
 	const pathname = usePathname()
 
 	const handleBookmark = async () => {
@@ -45,7 +45,7 @@ const CompanionCard = ({
 			style={{ backgroundColor: color }}
 		>
 			<div className='flex items-center justify-between'>
-				<div className='subject-badge'>{translateSubject(subject)}</div>
+				<div className='subject-badge'>{translatedSubject(subject)}</div>
 				<button className='companion-bookmark' onClick={handleBookmark}>
 					<Image
 						src={bookmarked ? '/icons/bookmark-filled.svg' : '/icons/bookmark.svg'}

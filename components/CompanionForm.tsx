@@ -24,7 +24,7 @@ import { subjects } from '@/constants'
 import { Textarea } from '@/components/ui/textarea'
 import { createCompanion } from '@/lib/actions/companion.actions'
 import { redirect } from 'next/navigation'
-import { useTranslatedSubject } from '@/lib/subject'
+import { translateSubject } from '@/lib/subject'
 import { useRedirectWithLoader } from '@/hooks/useRedirectWithLoader'
 import { Loader2Icon } from 'lucide-react'
 import es from '@/messages/es.json'
@@ -40,7 +40,7 @@ const formSchema = z.object({
 
 const CompanionForm = () => {
 	const t = es['form']
-	const translateSubject = useTranslatedSubject()
+	const translatedSubject = translateSubject()
 	const { loading, handleRedirect } = useRedirectWithLoader()
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -109,7 +109,7 @@ const CompanionForm = () => {
 												value={subject}
 												className='capitalize'
 											>
-												{translateSubject(subject)}
+												{translatedSubject(subject)}
 											</SelectItem>
 										))}
 									</SelectContent>

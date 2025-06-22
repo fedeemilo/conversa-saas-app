@@ -11,7 +11,7 @@ import {
 import { cn, getSubjectColor, shuffleString, truncateText } from '@/lib/utils'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useTranslatedSubject } from '@/lib/subject'
+import { translateSubject } from '@/lib/subject'
 import es from '@/messages/es.json'
 
 interface CompanionsListProps {
@@ -22,7 +22,7 @@ interface CompanionsListProps {
 
 const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) => {
 	const t = es['companions-list']
-	const translateSubject = useTranslatedSubject()
+	const translatedSubject = translateSubject()
 
 	return (
 		<article className={cn('companion-list', classNames)}>
@@ -64,7 +64,7 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
 							</TableCell>
 							<TableCell>
 								<div className='subject-badge w-fit max-md:hidden'>
-									{translateSubject(subject)}
+									{translatedSubject(subject)}
 								</div>
 								<div
 									className='flex w-fit items-center justify-center rounded-lg p-2 md:hidden'

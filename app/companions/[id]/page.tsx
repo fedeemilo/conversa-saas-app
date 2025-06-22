@@ -8,6 +8,7 @@ import CompanionSessionSkeleton from '@/components/CompanionSessionSkeleton'
 import CompanionClientWrapper from '@/components/CompanionClientWrapper'
 import es from '@/messages/es.json'
 import UpgradeRequired from '@/components/UpgradeRequired'
+import { translateSubject } from '@/lib/subject'
 
 interface CompanionSessionPageProps {
 	params: Promise<{ id: string; locale: string }>
@@ -15,6 +16,7 @@ interface CompanionSessionPageProps {
 
 const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
 	const { id } = await params
+	const translatedSubject = translateSubject()
 
 	const [companion, user, canSession] = await Promise.all([
 		getCompanion(id),
@@ -54,7 +56,9 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
 					<div className='flex flex-col gap-2'>
 						<div className='flex items-center gap-2'>
 							<p className='text-2xl font-bold'>{name}</p>
-							<div className='subject-badge max-sm:hidden'>{subject}</div>
+							<div className='subject-badge max-sm:hidden'>
+								{translatedSubject(subject)}
+							</div>
 						</div>
 						<p className='text-lg'>{topic}</p>
 					</div>

@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select'
 import { subjects } from '@/constants'
 import useSearchFilter from '@/hooks/useSearchFilter'
-import { useTranslatedSubject } from '@/lib/subject'
+import { translateSubject } from '@/lib/subject'
 import es from '@/messages/es.json'
 
 const SubjectFilter = () => {
@@ -19,7 +19,7 @@ const SubjectFilter = () => {
 	})
 
 	const t = es['subject-filter']
-	const translateSubject = useTranslatedSubject()
+	const translatedSubject = translateSubject()
 
 	return (
 		<Select onValueChange={setSearchQuery} value={searchQuery}>
@@ -30,7 +30,7 @@ const SubjectFilter = () => {
 				<SelectItem value='all'>{t.all}</SelectItem>
 				{subjects.map((subject) => (
 					<SelectItem key={subject} value={subject} className='capitalize'>
-						{translateSubject(subject)}
+						{translatedSubject(subject)}
 					</SelectItem>
 				))}
 			</SelectContent>
