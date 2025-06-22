@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 	keywords: ['educación', 'voz', 'IA', 'tutores virtuales', 'resumen de clases'],
 	icons: {
 		icon: '/favicon.ico',
-		apple: '/icons/icon-192x192.png'
+		apple: '/icon-192x192.png'
 	},
 	manifest: '/manifest.json',
 	openGraph: {
