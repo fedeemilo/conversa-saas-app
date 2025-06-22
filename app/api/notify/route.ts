@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 		const signature = req.headers.get('x-signature')
 		const supabase = createSupabaseClient()
 
-		// ✅ Verificación HMAC-SHA256
+		// ✅ Verificar firma
 		const expectedSignature = crypto
 			.createHmac('sha256', MP_WEBHOOK_SECRET)
 			.update(rawBody)
@@ -25,29 +25,30 @@ export async function POST(req: NextRequest) {
 		const body = JSON.parse(rawBody)
 		console.log('✅ Webhook recibido:', body)
 
-		// 🧭 Validar acción para preapproval
-		if (body.action === 'preapproval.created' || body.action === 'preapproval.authorized') {
-			const preapprovalId = body.data.id
+		/**
+		 * 🧾 1. MANEJO DE payment.created
+		 */
+		if (body.action === 'payment.created') {
+			const paymentId = body.data?.id
+			if (!paymentId) return new Response('Falta payment ID', { status: 400 })
 
-			// 🔍 Consultar preapproval real
-			const res = await fetch(`https://api.mercadopago.com/preapproval/${preapprovalId}`, {
+			const res = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
 				headers: {
 					Authorization: `Bearer ${MP_ACCESS_TOKEN}`
 				}
 			})
-			const preapproval = await res.json()
-			console.log('✅ Preapproval recuperado:', preapproval)
+			const payment = await res.json()
+			console.log('🔎 Detalle de payment:', payment)
 
-			if (preapproval.status === 'authorized') {
-				const ref = JSON.parse(preapproval.external_reference || '{}')
-				const userId = ref.userId
+			if (payment.status === 'approved') {
+				const ref = JSON.parse(payment.external_reference || '{}')
+				const userId = ref.userId || ref.user_id
 
 				if (!userId) {
-					console.warn('⚠️ userId faltante en external_reference')
+					console.warn('⚠️ userId no presente en external_reference')
 					return new Response('Missing user_id', { status: 400 })
 				}
 
-				// 📦 Insertar o actualizar suscripción
 				const { error } = await supabase.from('subscriptions').upsert(
 					{
 						user_id: userId,
@@ -59,7 +60,48 @@ export async function POST(req: NextRequest) {
 				)
 
 				if (error) {
-					console.error('❌ Error al guardar en Supabase:', error)
+					console.error('❌ Supabase error:', error)
+					return new Response('Supabase error', { status: 500 })
+				}
+			}
+		}
+
+		/**
+		 * 🔁 2. MANEJO DE preapproval.authorized
+		 */
+		if (body.action === 'preapproval.created' || body.action === 'preapproval.authorized') {
+			const preapprovalId = body.data?.id
+			if (!preapprovalId) return new Response('Falta preapproval ID', { status: 400 })
+
+			const res = await fetch(`https://api.mercadopago.com/preapproval/${preapprovalId}`, {
+				headers: {
+					Authorization: `Bearer ${MP_ACCESS_TOKEN}`
+				}
+			})
+			const preapproval = await res.json()
+			console.log('🔁 Detalle de preapproval:', preapproval)
+
+			if (preapproval.status === 'authorized') {
+				const ref = JSON.parse(preapproval.external_reference || '{}')
+				const userId = ref.userId
+
+				if (!userId) {
+					console.warn('⚠️ userId no presente en external_reference')
+					return new Response('Missing user_id', { status: 400 })
+				}
+
+				const { error } = await supabase.from('subscriptions').upsert(
+					{
+						user_id: userId,
+						plan: 'pro',
+						status: 'active',
+						updated_at: new Date().toISOString()
+					},
+					{ onConflict: 'user_id' }
+				)
+
+				if (error) {
+					console.error('❌ Supabase error:', error)
 					return new Response('Supabase error', { status: 500 })
 				}
 			}
