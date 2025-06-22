@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 		'Mejorá tus habilidades con tutores interactivos por voz. Transcripción, resúmenes y más.',
 	keywords: ['educación', 'voz', 'IA', 'tutores virtuales', 'resumen de clases'],
 	icons: {
-		icon: '/favicon.ico',
+		icon: ['/favicon.ico', { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' }],
 		apple: '/icon-192x192.png'
 	},
 	manifest: '/manifest.json',
