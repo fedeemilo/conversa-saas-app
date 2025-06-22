@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
 			},
 			back_url: `${BASE_URL}/subscription?status=approved`,
 			external_reference: JSON.stringify({ userId, planName }),
+			notification_url: `${BASE_URL}/api/notify`,
 			payer_email: payerEmail
 		} as any
 

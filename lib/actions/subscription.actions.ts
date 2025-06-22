@@ -13,7 +13,7 @@ export const createCheckoutLink = async () => {
 		body: JSON.stringify({
 			userId,
 			planName: PLANS.PRO,
-			price: 2900
+			price: 4900
 		}),
 		headers: {
 			'Content-Type': 'application/json'
