@@ -62,7 +62,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 								'@type': 'Organization',
 								name: 'EduVoice',
 								url: 'https://eduvoice.ai',
-								logo: 'https://eduvoice.ai/icons/icon-192x192.png'
+								logo: 'https://eduvoice.ai/icon-192x192.png'
 							})
 						}}
 					/>
