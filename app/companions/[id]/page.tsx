@@ -25,7 +25,9 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
 	const t = es['companion-session']
 	const tCompanion = es['companion-component']
 
-	if (!user) redirect('/sign-in')
+	if (!user || !canSession) {
+		redirect('/sign-in')
+	}
 	if (!companion) redirect('/companions')
 
 	if (!canSession) {

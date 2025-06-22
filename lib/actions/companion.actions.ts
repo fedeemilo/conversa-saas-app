@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 import { getUserPlan } from '@/lib/actions/user.actions'
 import { startOfMonth, endOfMonth } from 'date-fns'
 import { COMPANION_LIMITS, PLANS } from '@/constants'
+import { redirect } from 'next/navigation'
 
 // Companions
 export const createCompanion = async (formData: CreateCompanion) => {
@@ -132,11 +133,11 @@ export const getUserSessions = async (userId: string, limit = 10) => {
 }
 
 // Permissions
-export const newCompanionPermissions = async () => {
+export const newCompanionPermissions = async (): Promise<boolean> => {
 	const { userId } = await auth()
 	const supabase = createSupabaseClient()
 
-	if (!userId) throw new Error('No user ID found')
+	if (!userId) return false
 
 	const plan = await getUserPlan()
 	const limit = COMPANION_LIMITS[plan ?? ''] ?? 0
@@ -153,9 +154,10 @@ export const newCompanionPermissions = async () => {
 	return (count ?? 0) < limit
 }
 
-export const newSessionPermissions = async () => {
+export const newSessionPermissions = async (): Promise<boolean> => {
 	const { userId } = await auth()
-	if (!userId) throw new Error('No user ID found')
+
+	if (!userId) return false
 
 	const plan = await getUserPlan()
 	if (plan === PLANS.PRO) return true
@@ -191,7 +193,7 @@ export const addBookmark = async (companionId: string, path: string) => {
 	if (error) {
 		throw new Error(error.message)
 	}
-	// Revalidate the path to force a re-render of the page
+
 	revalidatePath(path)
 	return data
 }
