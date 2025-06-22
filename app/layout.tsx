@@ -54,6 +54,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 		<ClerkProvider appearance={{ variables: { colorPrimary: '#4007a2' } }} localization={esES}>
 			<html lang='es'>
 				<head>
+					<link rel='icon' href='/favicon.ico' sizes='any' />
 					<script
 						type='application/ld+json'
 						dangerouslySetInnerHTML={{
